@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+use App::Runlist;
+
+App::Runlist->run;
+
+=head1 OVERVIEW
+
+For help with App::Runlist, run "runlist help"
+
+=cut
+
+__END__
+
+perl -I lib/ script/runlist
+
+perl -I lib/ script/runlist merge t/I.yml t/II.yml -o stdout
+
+perl -I lib/ script/runlist stat t/intergenic.yml -s t/chr.sizes -o stdout
+
+perl -I lib/ script/runlist subset t/example.fas t/example.name.list -o stdout
+
+perl -I lib/ t/04-subset.t
