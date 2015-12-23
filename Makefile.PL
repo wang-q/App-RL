@@ -23,6 +23,7 @@ my %WriteMakefileArgs = (
     "App::Cmd" => 0,
     "List::MoreUtils" => 0,
     "Path::Tiny" => 0,
+    "Set::Scalar" => 0,
     "YAML::Syck" => 0
   },
   "TEST_REQUIRES" => {
@@ -39,6 +40,7 @@ my %FallbackPrereqs = (
   "App::Cmd" => 0,
   "List::MoreUtils" => 0,
   "Path::Tiny" => 0,
+  "Set::Scalar" => 0,
   "Test::More" => "0.88",
   "YAML::Syck" => 0
 );

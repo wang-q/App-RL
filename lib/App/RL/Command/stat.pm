@@ -29,7 +29,7 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    $self->usage_error("This command need one input files.") unless @$args;
+    $self->usage_error("This command need one input file.") unless @$args;
     $self->usage_error("The input file [@{[$args->[0]]}] doesn't exist.")
         unless -e $args->[0];
 

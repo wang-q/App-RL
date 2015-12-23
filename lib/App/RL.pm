@@ -13,6 +13,7 @@ use 5.008001;
 use Carp;
 use List::MoreUtils;
 use Path::Tiny;
+use Set::Scalar;
 use YAML::Syck;
 
 use AlignDB::IntSpan;
