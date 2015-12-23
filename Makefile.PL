@@ -12,13 +12,13 @@ my %WriteMakefileArgs = (
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0
   },
-  "DISTNAME" => "App-Runlist",
+  "DISTNAME" => "App-RL",
   "EXE_FILES" => [
     "script/runlist"
   ],
   "LICENSE" => "perl",
   "MIN_PERL_VERSION" => "5.008001",
-  "NAME" => "App::Runlist",
+  "NAME" => "App::RL",
   "PREREQ_PM" => {
     "App::Cmd" => 0,
     "List::MoreUtils" => 0,

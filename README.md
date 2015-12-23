@@ -1,14 +1,19 @@
 # NAME
 
-App::Runlist - operating chromosome runlist files
+App::RL - operating chromosome runlist files
 
 # SYNOPSIS
 
-    commands: list the application's commands
-        help: display a command's help screen
-
-       merge: convert axt to blocked fasta
-        stat: convert maf to blocked fasta
+    runlist <command> [-?h] [long options...]
+        -? -h --help    show help
+    
+    Available commands:
+    
+      commands: list the application's commands
+          help: display a command's help screen
+    
+         merge: merge runlist yaml files
+          stat: coverage on chromosomes for runlists
 
 See `runlist commands` for usage information.
 
