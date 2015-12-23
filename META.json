@@ -51,6 +51,17 @@
       }
    },
    "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/wang-q/App-RL/issues"
+      },
+      "homepage" : "https://github.com/wang-q/App-RL",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/wang-q/App-RL.git",
+         "web" : "https://github.com/wang-q/App-RL"
+      }
+   },
    "version" : "0.0.1"
 }
 
