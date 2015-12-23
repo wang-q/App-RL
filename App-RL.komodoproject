@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Komodo Project File - DO NOT EDIT -->
-<project id="5049ea51-2360-7e4d-a2e9-ec2e13f08d9d" kpf_version="5" name="App-Runlist.komodoproject">
+<project id="5049ea51-2360-7e4d-a2e9-ec2e13f08d9d" kpf_version="5" name="App-RL.komodoproject">
 <preference-set idref="5049ea51-2360-7e4d-a2e9-ec2e13f08d9d" id="project" preftype="project">
+  <long id="prefs_version">1</long>
 </preference-set>
 </project>

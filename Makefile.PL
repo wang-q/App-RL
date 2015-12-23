@@ -13,15 +13,16 @@ my %WriteMakefileArgs = (
     "ExtUtils::MakeMaker" => 0
   },
   "DISTNAME" => "App-Runlist",
+  "EXE_FILES" => [
+    "script/runlist"
+  ],
   "LICENSE" => "perl",
   "MIN_PERL_VERSION" => "5.008001",
   "NAME" => "App::Runlist",
   "PREREQ_PM" => {
     "App::Cmd" => 0,
-    "IO::Zlib" => 0,
     "List::MoreUtils" => 0,
     "Path::Tiny" => 0,
-    "Tie::IxHash" => 0,
     "YAML::Syck" => 0
   },
   "TEST_REQUIRES" => {
@@ -36,11 +37,9 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "App::Cmd" => 0,
-  "IO::Zlib" => 0,
   "List::MoreUtils" => 0,
   "Path::Tiny" => 0,
   "Test::More" => "0.88",
-  "Tie::IxHash" => 0,
   "YAML::Syck" => 0
 );
 

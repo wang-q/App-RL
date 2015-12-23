@@ -1,6 +1,6 @@
-package App::Runlist::Command::merge;
+package App::RL::Command::stat;
 
-use App::Runlist -command;
+use App::RL -command;
 
 use constant abstract => 'coverage on chromosomes for runlists';
 
@@ -44,21 +44,22 @@ sub execute {
     #----------------------------#
     # Loading
     #----------------------------#
-    my $length_of = read_sizes( $opt->{size}, $opt->{remove} );
+    my $length_of = App::RL::read_sizes( $opt->{size}, $opt->{remove} );
 
     my $s_of = {};
     my @keys;
     if ( $opt->{mk} ) {
-        my $yml = LoadFile( $args->[0] );
+        my $yml = YAML::Syck::LoadFile( $args->[0] );
         @keys = sort keys %{$yml};
 
         for my $key (@keys) {
-            $s_of->{$key} = runlist2set( $yml->{$key}, $opt->{remove} );
+            $s_of->{$key} = App::RL::runlist2set( $yml->{$key}, $opt->{remove} );
         }
     }
     else {
         @keys = ("__single");
-        $s_of->{__single} = runlist2set( LoadFile( $args->[0] ), $opt->{remove} );
+        $s_of->{__single}
+            = App::RL::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
     }
 
     #----------------------------#

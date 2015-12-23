@@ -1,6 +1,6 @@
-package App::Runlist::Command::merge;
+package App::RL::Command::merge;
 
-use App::Runlist -command;
+use App::RL -command;
 
 use constant abstract => 'merge runlist yaml files';
 
