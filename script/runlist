@@ -19,4 +19,6 @@ perl -I lib/ script/runlist stat t/intergenic.yml -s t/chr.sizes -o stdout
 
 perl -I lib/ script/runlist compare --op intersect t/intergenic.yml t/repeat.yml -o stdout
 
+perl -I lib/ script/runlist split t/repeat.yml -o stdout
+
 perl ~/Scripts/egas/compare_runlist.pl --op intersect -f1 t/intergenic.yml -f2 t/repeat.yml
