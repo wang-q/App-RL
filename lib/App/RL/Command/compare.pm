@@ -1,6 +1,7 @@
 package App::RL::Command::compare;
 
 use App::RL -command;
+use App::RL::Common qw(:all);
 
 use constant abstract => 'compare 2 chromosome runlists';
 
@@ -80,21 +81,21 @@ sub execute {
         @keys = sort keys %{$yml};
 
         for my $key (@keys) {
-            $s1_of->{$key} = App::RL::runlist2set( $yml->{$key}, $opt->{remove} );
+            $s1_of->{$key} = runlist2set( $yml->{$key}, $opt->{remove} );
             $all_name_set->insert( keys %{ $s1_of->{$key} } );
         }
     }
     else {
         @keys = ("__single");
         $s1_of->{__single}
-            = App::RL::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+            = runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
         $all_name_set->insert( keys %{ $s1_of->{__single} } );
     }
 
     # file2
     my $s2;
     {
-        $s2 = App::RL::runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
+        $s2 = runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
         $all_name_set->insert( keys %{$s2} );
     }
 

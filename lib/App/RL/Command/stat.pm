@@ -1,6 +1,7 @@
 package App::RL::Command::stat;
 
 use App::RL -command;
+use App::RL::Common qw(:all);
 
 use constant abstract => 'coverage on chromosomes for runlists';
 
@@ -44,7 +45,7 @@ sub execute {
     #----------------------------#
     # Loading
     #----------------------------#
-    my $length_of = App::RL::read_sizes( $opt->{size}, $opt->{remove} );
+    my $length_of = read_sizes( $opt->{size}, $opt->{remove} );
 
     my $s_of = {};
     my @keys;
@@ -53,13 +54,13 @@ sub execute {
         @keys = sort keys %{$yml};
 
         for my $key (@keys) {
-            $s_of->{$key} = App::RL::runlist2set( $yml->{$key}, $opt->{remove} );
+            $s_of->{$key} = runlist2set( $yml->{$key}, $opt->{remove} );
         }
     }
     else {
         @keys = ("__single");
         $s_of->{__single}
-            = App::RL::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+            = runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
     }
 
     #----------------------------#
