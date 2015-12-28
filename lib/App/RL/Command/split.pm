@@ -9,6 +9,7 @@ sub opt_spec {
     return (
         [   "outdir|o=s", "output location, [stdout] for screen, default is [.]", { default => '.' }
         ],
+        [ "suffix|s=s", "extension of output files, default is [.yml]", { default => '.yml' } ],
     );
 }
 
@@ -50,7 +51,8 @@ sub execute {
             print YAML::Syck::Dump( $yml->{$key} );
         }
         else {
-            YAML::Syck::DumpFile( Path::Tiny::path( $opt->{outdir}, $key . ".yml" ), $yml->{$key} );
+            YAML::Syck::DumpFile( Path::Tiny::path( $opt->{outdir}, $key . $opt->{suffix} ),
+                $yml->{$key} );
         }
     }
 
