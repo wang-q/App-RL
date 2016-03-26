@@ -100,7 +100,7 @@ sub execute {
     }
 
     #----------------------------#
-    # Operation
+    # Operating
     #----------------------------#
     my $op_result_of = { map { $_ => {} } @keys };
 

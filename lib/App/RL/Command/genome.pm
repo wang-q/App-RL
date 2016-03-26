@@ -45,6 +45,9 @@ sub execute {
     #----------------------------#
     my $length_of = read_sizes( $args->[0], $opt->{remove} );
 
+    #----------------------------#
+    # Operating
+    #----------------------------#
     my $r_of = {};
     for my $key ( keys %{$length_of} ) {
         my $set = AlignDB::IntSpan->new;
@@ -52,6 +55,9 @@ sub execute {
         $r_of->{$key} = $set->runlist;
     }
 
+    #----------------------------#
+    # Output
+    #----------------------------#
     my $out_fh;
     if ( lc( $opt->{outfile} ) eq "stdout" ) {
         $out_fh = *STDOUT;
