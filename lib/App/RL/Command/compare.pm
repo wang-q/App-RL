@@ -137,7 +137,6 @@ sub execute {
 
     if ( $opt->{mk} ) {
         print {$out_fh} YAML::Syck::Dump($op_result_of);
-
     }
     else {
         print {$out_fh} YAML::Syck::Dump( $op_result_of->{__single} );
