@@ -13,7 +13,4 @@ blib
 !META.json
 !LICENSE
 
-*.fas
-*.list
-
 .komodotools
