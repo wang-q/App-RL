@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.1.9  2016-03-29 22:06:48 CST
+    - runlist some
+
 0.1.8  2016-03-29 21:19:57 CST
     - runlist combine: combine multiple keys
 
