@@ -35,7 +35,7 @@ sub validate_args {
         unless -e $args->[0];
 
     if ( !exists $opt->{outfile} ) {
-        $opt->{outfile} = $opt->{op} . ".yml";
+        $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . ".combine.yml";
     }
 }
 
