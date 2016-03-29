@@ -23,6 +23,7 @@ App::RL - operating chromosome runlist files
           help: display a command's help screen
 
        compare: compare 2 chromosome runlists
+        genome: convert chr.size to runlists
          merge: merge runlist yaml files
          split: split runlist yaml files
           stat: coverage on chromosomes for runlists

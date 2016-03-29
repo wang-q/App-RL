@@ -17,6 +17,7 @@ sub opt_spec {
             { default => 0 }
         ],
         [ "remove|r", "Remove 'chr0' from chromosome names." ],
+        [ "mk",       "YAML file contains multiple sets of runlists." ],
     );
 }
 
@@ -79,16 +80,35 @@ sub execute {
     #----------------------------#
     # Loading
     #----------------------------#
-    my $s_of = runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+    my $s_of = {};
+    my @keys;
+    if ( $opt->{mk} ) {
+        my $yml = YAML::Syck::LoadFile( $args->[0] );
+        @keys = sort keys %{$yml};
+
+        for my $key (@keys) {
+            $s_of->{$key} = runlist2set( $yml->{$key}, $opt->{remove} );
+        }
+    }
+    else {
+        @keys = ("__single");
+        $s_of->{__single}
+            = runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+    }
 
     #----------------------------#
     # Operating
     #----------------------------#
-    my $op_result_of = {};
-    for my $chr ( keys %{$s_of} ) {
-        my $op     = $opt->{op};
-        my $op_set = $s_of->{$chr}->$op( $opt->{number} );
-        $op_result_of->{$chr} = $op_set->runlist;
+    my $op_result_of = { map { $_ => {} } @keys };
+
+    for my $key (@keys) {
+        my $s = $s_of->{$key};
+
+        for my $chr ( keys %{$s} ) {
+            my $op     = $opt->{op};
+            my $op_set = $s->{$chr}->$op( $opt->{number} );
+            $op_result_of->{$key}{$chr} = $op_set->runlist;
+        }
     }
 
     #----------------------------#
@@ -101,7 +121,13 @@ sub execute {
     else {
         open $out_fh, ">", $opt->{outfile};
     }
-    print {$out_fh} YAML::Syck::Dump($op_result_of);
+
+    if ( $opt->{mk} ) {
+        print {$out_fh} YAML::Syck::Dump($op_result_of);
+    }
+    else {
+        print {$out_fh} YAML::Syck::Dump( $op_result_of->{__single} );
+    }
 
     close $out_fh;
     return;
