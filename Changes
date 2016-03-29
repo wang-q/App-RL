@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.1.7  2016-03-29 20:30:45 CST
+    - add --mk to `runlist span`
+
 0.1.6  2016-03-27 05:48:27 CST
     - runlist span: operating spans in runlists
 
