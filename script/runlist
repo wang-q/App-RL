@@ -26,4 +26,6 @@ perl -I lib/ t/07-genome.t
 
 perl -I lib/ script/runlist combine t/Atha.yml -o stdout
 
+perl -I lib/ script/runlist some t/Atha.yml t/Atha.list -o stdout
+
 perl ~/Scripts/egas/compare_runlist.pl --op intersect -f1 t/intergenic.yml -f2 t/repeat.yml
