@@ -11,7 +11,7 @@ use Path::Tiny;
 use Set::Scalar;
 use YAML::Syck;
 
-use AlignDB::IntSpanXS;
+use AlignDB::IntSpan;
 
 use base 'Exporter';
 use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
@@ -48,9 +48,9 @@ sub read_names {
     return \@lines;
 }
 
-# The only entrance for AlignDB::IntSpanXS
+# The only entrance for AlignDB::IntSpan or AlignDB::IntSpanXS
 sub new_set {
-    return AlignDB::IntSpanXS->new;
+    return AlignDB::IntSpan->new;
 }
 
 sub runlist2set {
