@@ -21,7 +21,6 @@ my %WriteMakefileArgs = (
   "NAME" => "App::RL",
   "PREREQ_PM" => {
     "AlignDB::IntSpan" => 0,
-    "AlignDB::IntSpanXS" => 0,
     "App::Cmd" => 0,
     "List::MoreUtils" => 0,
     "Path::Tiny" => 0,
@@ -31,7 +30,7 @@ my %WriteMakefileArgs = (
   "TEST_REQUIRES" => {
     "Test::More" => "0.88"
   },
-  "VERSION" => "0.2.0",
+  "VERSION" => "0.2.1",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -40,7 +39,6 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "AlignDB::IntSpan" => 0,
-  "AlignDB::IntSpanXS" => 0,
   "App::Cmd" => 0,
   "List::MoreUtils" => 0,
   "Path::Tiny" => 0,
