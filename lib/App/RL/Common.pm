@@ -11,7 +11,7 @@ use Path::Tiny;
 use Set::Scalar;
 use YAML::Syck;
 
-use AlignDB::IntSpan;
+use AlignDB::IntSpanXS;
 
 use base 'Exporter';
 use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
@@ -19,7 +19,7 @@ use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
 %EXPORT_TAGS = (
     all => [
         qw{
-            read_sizes read_names runlist2set
+            read_sizes read_names new_set runlist2set
             },
     ],
 );
@@ -48,6 +48,11 @@ sub read_names {
     return \@lines;
 }
 
+# The only entrance for AlignDB::IntSpanXS
+sub new_set {
+    return AlignDB::IntSpanXS->new;
+}
+
 sub runlist2set {
     my $runlist_of = shift;
     my $remove_chr = shift;
@@ -57,7 +62,8 @@ sub runlist2set {
     for my $chr ( sort keys %{$runlist_of} ) {
         my $new_chr = $chr;
         $new_chr =~ s/chr0?// if $remove_chr;
-        my $set = AlignDB::IntSpan->new( $runlist_of->{$chr} );
+        my $set = new_set();
+        $set->add( $runlist_of->{$chr} );
         $set_of->{$new_chr} = $set;
     }
 

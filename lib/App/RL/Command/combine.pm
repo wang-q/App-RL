@@ -67,7 +67,7 @@ sub execute {
     #----------------------------#
     # Operating
     #----------------------------#
-    my $op_result_of = { map { $_ => AlignDB::IntSpan->new } $all_name_set->members };
+    my $op_result_of = { map { $_ => new_set() } $all_name_set->members };
 
     for my $key (@keys) {
         my $s = $s_of->{$key};

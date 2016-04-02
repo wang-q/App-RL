@@ -50,7 +50,7 @@ sub execute {
     #----------------------------#
     my $r_of = {};
     for my $key ( keys %{$length_of} ) {
-        my $set = AlignDB::IntSpan->new;
+        my $set = new_set();
         $set->add_pair( 1, $length_of->{$key} );
         $r_of->{$key} = $set->runlist;
     }

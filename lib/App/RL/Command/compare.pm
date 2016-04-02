@@ -111,7 +111,7 @@ sub execute {
         for my $s ( $s1, $s2 ) {
             for my $chr ( $all_name_set->members ) {
                 if ( !exists $s->{$chr} ) {
-                    $s->{$chr} = AlignDB::IntSpan->new;
+                    $s->{$chr} = new_set();
                 }
             }
         }
