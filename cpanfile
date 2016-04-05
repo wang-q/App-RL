@@ -1,7 +1,9 @@
 requires 'App::Cmd';
+requires 'IO::Zlib';
 requires 'List::MoreUtils';
 requires 'Path::Tiny';
 requires 'Set::Scalar';
+requires 'Tie::IxHash';
 requires 'YAML::Syck';
 requires 'perl', '5.008001';
 

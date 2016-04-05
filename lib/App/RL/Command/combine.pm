@@ -21,7 +21,7 @@ sub usage_desc {
 
 sub description {
     my $desc;
-    $desc .= "Combine multiple sets of runlists.\n";
+    $desc .= ucfirst(abstract) . ".\n";
     $desc .= " " x 4 . "It's expected that the YAML file is --mk.\n";
     $desc .= " " x 4 . "Otherwise this command will make no effects.\n";
     return $desc;
