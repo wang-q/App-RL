@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.2  2016-04-06 01:29:29 CST
+    - `runlist covers`
+
 0.2.1  2016-04-03 05:04:04 CST
     - Back to AlignDB::IntSpan
         - Failed in `runlist compare all-gene.yml paralog.yml --op intersect --mk -o all-gene-paralog.yml`
