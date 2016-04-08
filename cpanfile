@@ -5,7 +5,7 @@ requires 'Path::Tiny';
 requires 'Set::Scalar';
 requires 'Tie::IxHash';
 requires 'YAML::Syck';
-requires 'perl', '5.008001';
+requires 'perl', '5.010001';
 
 requires 'AlignDB::IntSpan';
 
