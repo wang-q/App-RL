@@ -45,7 +45,7 @@
             "Set::Scalar" : "0",
             "Tie::IxHash" : "0",
             "YAML::Syck" : "0",
-            "perl" : "5.008001"
+            "perl" : "5.010001"
          }
       },
       "test" : {
@@ -66,6 +66,6 @@
          "web" : "https://github.com/wang-q/App-RL"
       }
    },
-   "version" : "0.2.4"
+   "version" : "0.2.5"
 }
 
