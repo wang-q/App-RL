@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.4  2016-04-08 14:57:41 CST
+    - Add travis-ci
+
 0.2.3  2016-04-08 10:47:40 CST
     - runlist stat2
 
