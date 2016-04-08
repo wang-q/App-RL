@@ -20,7 +20,7 @@ sub opt_spec {
 sub usage_desc {
     my $self = shift;
     my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infiles>";
+    $desc .= " <infile1> <infile2>";
     return $desc;
 }
 
@@ -61,7 +61,7 @@ sub validate_args {
     }
 
     if ( !exists $opt->{outfile} ) {
-        $opt->{outfile} = $opt->{op} . ".yml";
+        $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . $opt->{op} . ".yml";
     }
 }
 
@@ -109,7 +109,7 @@ sub execute {
 
         # give empty set to non-existing chrs
         for my $s ( $s1, $s2 ) {
-            for my $chr ( $all_name_set->members ) {
+            for my $chr ( sort $all_name_set->members ) {
                 if ( !exists $s->{$chr} ) {
                     $s->{$chr} = new_set();
                 }
