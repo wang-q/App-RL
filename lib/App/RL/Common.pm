@@ -13,7 +13,7 @@ use Set::Scalar;
 use Tie::IxHash;
 use YAML::Syck;
 
-use AlignDB::IntSpan;
+use AlignDB::IntSpanXS;
 
 use base 'Exporter';
 use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
@@ -52,7 +52,7 @@ sub read_names {
 
 # The only entrance for AlignDB::IntSpan or AlignDB::IntSpanXS
 sub new_set {
-    return AlignDB::IntSpan->new;
+    return AlignDB::IntSpanXS->new;
 }
 
 sub runlist2set {
