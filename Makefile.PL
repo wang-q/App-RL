@@ -20,7 +20,7 @@ my %WriteMakefileArgs = (
   "MIN_PERL_VERSION" => "5.010001",
   "NAME" => "App::RL",
   "PREREQ_PM" => {
-    "AlignDB::IntSpan" => 0,
+    "AlignDB::IntSpanXS" => 0,
     "App::Cmd" => 0,
     "IO::Zlib" => 0,
     "List::MoreUtils" => 0,
@@ -32,7 +32,7 @@ my %WriteMakefileArgs = (
   "TEST_REQUIRES" => {
     "Test::More" => "0.88"
   },
-  "VERSION" => "0.2.5",
+  "VERSION" => "0.2.6",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -40,7 +40,7 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
-  "AlignDB::IntSpan" => 0,
+  "AlignDB::IntSpanXS" => 0,
   "App::Cmd" => 0,
   "IO::Zlib" => 0,
   "List::MoreUtils" => 0,
