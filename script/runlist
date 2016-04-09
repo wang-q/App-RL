@@ -31,6 +31,6 @@ perl -I lib/ script/runlist some t/Atha.yml t/Atha.list -o stdout
 perl -I lib/ script/runlist covers t/S288c.txt -o stdout
 perl -I lib/ t/11-covers.t
 
-perl -I lib/ script/runlist compare t/all-gene.yml t/paralog.yml --op intersect -o all-gene-paralog.yml
+perl -I lib/ script/runlist compare t/r1.yml t/r2.yml --op intersect -o stdout
 
 perl ~/Scripts/egas/compare_runlist.pl --op intersect -f1 t/intergenic.yml -f2 t/repeat.yml
