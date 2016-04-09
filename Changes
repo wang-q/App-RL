@@ -1,6 +1,8 @@
 Revision history for App-RL
 
 {{$NEXT}}
+
+0.2.7  2016-04-10 04:40:19 CST
     - Back to AlignDB::IntSpan.
       Memory leaks in untracked XS codes. Pure C is fine.
 
