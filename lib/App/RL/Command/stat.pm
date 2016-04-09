@@ -106,7 +106,7 @@ sub csv_lines {
     for my $chr ( sort keys %{$set_of} ) {
         my $length   = $length_of->{$chr};
         my $size     = $set_of->{$chr}->size;
-        my $coverage = $size / $length;
+        my $coverage = sprintf "%.4f", $size / $length;
 
         $all_length += $length;
         $all_size   += $size;
@@ -114,7 +114,7 @@ sub csv_lines {
         push @lines, "$chr,$length,$size,$coverage\n";
     }
 
-    $all_coverage = $all_size / $all_length;
+    $all_coverage = sprintf "%.4f", $all_size / $all_length;
     push @lines, "all,$all_length,$all_size,$all_coverage\n";
 
     return @lines;
