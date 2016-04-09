@@ -7,7 +7,7 @@ requires 'Tie::IxHash';
 requires 'YAML::Syck';
 requires 'perl', '5.010001';
 
-requires 'AlignDB::IntSpanXS';
+requires 'AlignDB::IntSpan';
 
 on test => sub {
     requires 'Test::More', 0.88;

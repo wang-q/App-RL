@@ -13,7 +13,7 @@ use Set::Scalar;
 use Tie::IxHash;
 use YAML::Syck;
 
-use AlignDB::IntSpanXS;
+use AlignDB::IntSpan;
 
 use base 'Exporter';
 use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
@@ -26,6 +26,11 @@ use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
     ],
 );
 @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
+
+# The only entrance for AlignDB::IntSpan or AlignDB::IntSpanXS
+sub new_set {
+    return AlignDB::IntSpan->new;
+}
 
 sub read_sizes {
     my $file       = shift;
@@ -48,11 +53,6 @@ sub read_names {
     my @lines = path($file)->lines( { chomp => 1 } );
 
     return \@lines;
-}
-
-# The only entrance for AlignDB::IntSpan or AlignDB::IntSpanXS
-sub new_set {
-    return AlignDB::IntSpanXS->new;
 }
 
 sub runlist2set {
