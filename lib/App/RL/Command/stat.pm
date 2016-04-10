@@ -108,10 +108,9 @@ sub execute {
 sub csv_lines {
     my $set_of    = shift;
     my $length_of = shift;
-    my $all;
+    my $all       = shift;
 
     my @lines;
-
     my ( $all_length, $all_size, $all_coverage );
     for my $chr ( sort keys %{$set_of} ) {
         my $length   = $length_of->{$chr};
@@ -123,14 +122,15 @@ sub csv_lines {
 
         push @lines, "$chr,$length,$size,$coverage\n";
     }
-
     $all_coverage = sprintf "%.4f", $all_size / $all_length;
 
     # only keep whole genome
+    my $all_line = "all,$all_length,$all_size,$all_coverage\n";
     if ($all) {
         @lines = ();
+        $all_line =~ s/all,//;
     }
-    push @lines, "all,$all_length,$all_size,$all_coverage\n";
+    push @lines, $all_line;
 
     return @lines;
 }

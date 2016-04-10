@@ -204,11 +204,12 @@ sub csv_lines {
     my $all_ratio = $all_c2 == 0 ? 0 : $all_c2 / $all_c1;
 
     # only keep whole genome
-    if ($all) {
-        @lines = ();
-    }
     my $all_line = sprintf "all,%d,%d,%d,%d,%.4f,%.4f,%.4f\n", $all_length, $all_size,
         $all_s2_length, $all_s2_size, $all_c1, $all_c2, $all_ratio;
+    if ($all) {
+        @lines = ();
+        $all_line =~ s/all,//;
+    }
     push @lines, $all_line;
 
     return @lines;
