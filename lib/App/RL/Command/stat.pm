@@ -11,6 +11,7 @@ sub opt_spec {
         [ "size|s=s", "chr.sizes", { required => 1 } ],
         [ "remove|r", "Remove 'chr0' from chromosome names." ],
         [ "mk",       "YAML file contains multiple sets of runlists." ],
+        [ "all",      "Only write whole genome stats" ],
     );
 }
 
@@ -74,21 +75,29 @@ sub execute {
         open $out_fh, ">", $opt->{outfile};
     }
 
+    my $header = sprintf "key,chr,chr_length,size,coverage\n";
     if ( $opt->{mk} ) {
-        my @lines;
+        if ( $opt->{all} ) {
+            $header =~ s/chr\,//;
+        }
+        my @lines = ($header);
+
         for my $key (@keys) {
-            my @key_lines = csv_lines( $s_of->{$key}, $length_of );
+            my @key_lines = csv_lines( $s_of->{$key}, $length_of, $opt->{all} );
             $_ = "$key,$_" for @key_lines;
             push @lines, @key_lines;
         }
 
-        unshift @lines, "key,name,length,size,coverage\n";
         print {$out_fh} $_ for @lines;
     }
     else {
-        my @lines = csv_lines( $s_of->{__single}, $length_of );
+        $header =~ s/key\,//;
+        if ( $opt->{all} ) {
+            $header =~ s/chr\,//;
+        }
+        my @lines = ($header);
 
-        unshift @lines, "name,length,size,coverage\n";
+        push @lines, csv_lines( $s_of->{__single}, $length_of, $opt->{all} );
         print {$out_fh} $_ for @lines;
     }
 
@@ -99,6 +108,7 @@ sub execute {
 sub csv_lines {
     my $set_of    = shift;
     my $length_of = shift;
+    my $all;
 
     my @lines;
 
@@ -115,6 +125,11 @@ sub csv_lines {
     }
 
     $all_coverage = sprintf "%.4f", $all_size / $all_length;
+
+    # only keep whole genome
+    if ($all) {
+        @lines = ();
+    }
     push @lines, "all,$all_length,$all_size,$all_coverage\n";
 
     return @lines;

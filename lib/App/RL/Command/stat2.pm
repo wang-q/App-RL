@@ -16,6 +16,7 @@ sub opt_spec {
         [ "base|b=s", "basename of infile2", ],
         [ "remove|r", "Remove 'chr0' from chromosome names." ],
         [ "mk",       "First YAML file contains multiple sets of runlists." ],
+        [ "all",      "Only write whole genome stats" ],
     );
 }
 
@@ -133,25 +134,34 @@ sub execute {
         open $out_fh, ">", $opt->{outfile};
     }
 
+    my $header = sprintf "key,chr,chr_length,size,%s_length,%s_size,c1,c2,ratio\n",
+        $opt->{base}, $opt->{base};
     if ( $opt->{mk} ) {
-        my @lines;
+        if ( $opt->{all} ) {
+            $header =~ s/chr\,//;
+        }
+        my @lines = ($header);
+
         for my $key (@keys) {
-            my @key_lines = csv_lines( $s1_of->{$key}, $length_of, $s2, $op_result_of->{$key}, );
+            my @key_lines
+                = csv_lines( $s1_of->{$key}, $length_of, $s2, $op_result_of->{$key}, $opt->{all} );
             $_ = "$key,$_" for @key_lines;
             push @lines, @key_lines;
         }
 
-        my $header = sprintf "key,chr,chr_length,size,%s_length,%s_size,c1,c2,ratio\n",
-            $opt->{base}, $opt->{base};
-        unshift @lines, $header;
         print {$out_fh} $_ for @lines;
     }
     else {
-        my @lines = csv_lines( $s1_of->{__single}, $length_of, $s2, $op_result_of->{__single}, );
+        $header =~ s/key\,//;
+        if ( $opt->{all} ) {
+            $header =~ s/chr\,//;
+        }
+        my @lines = ($header);
 
-        my $header = sprintf "chr,chr_length,size,%s_length,%s_size,c1,c2,ratio\n", $opt->{base},
-            $opt->{base};
-        unshift @lines, $header;
+        push @lines,
+            csv_lines( $s1_of->{__single}, $length_of, $s2, $op_result_of->{__single},
+            $opt->{all} );
+
         print {$out_fh} $_ for @lines;
     }
 
@@ -164,6 +174,7 @@ sub csv_lines {
     my $length_of    = shift;
     my $s2           = shift;
     my $op_result_of = shift;
+    my $all          = shift;
 
     my @lines;
     my ( $all_length, $all_size, $all_s2_length, $all_s2_size, );
@@ -192,6 +203,10 @@ sub csv_lines {
     my $all_c2    = $all_s2_length == 0 ? 0 : $all_s2_size / $all_s2_length;
     my $all_ratio = $all_c2 == 0 ? 0 : $all_c2 / $all_c1;
 
+    # only keep whole genome
+    if ($all) {
+        @lines = ();
+    }
     my $all_line = sprintf "all,%d,%d,%d,%d,%.4f,%.4f,%.4f\n", $all_length, $all_size,
         $all_s2_length, $all_s2_size, $all_c1, $all_c2, $all_ratio;
     push @lines, $all_line;
