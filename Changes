@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.9  2016-04-11 01:53:43 CST
+    - Fix --all
+
 0.2.8  2016-04-11 01:28:45 CST
     - Add --all to stat and stat2
 
