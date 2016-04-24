@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.10  2016-04-24 21:24:03 CST
+    - More stricter YAML
+
 0.2.9  2016-04-11 01:53:43 CST
     - Fix --all
 
