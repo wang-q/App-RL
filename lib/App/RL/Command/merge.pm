@@ -45,6 +45,7 @@ sub execute {
         open $out_fh, ">", $opt->{outfile};
     }
 
+    my $master = {};
     for my $file ( @{$args} ) {
         my $basename = Path::Tiny::path($file)->basename( ".yaml", ".yml" );
         my $dir = Path::Tiny::path($file)->parent->stringify;
