@@ -1,4 +1,4 @@
-package App::RL::Command::covers;
+package App::RL::Command::cover;
 
 use App::RL -command;
 use App::RL::Common qw(:all);
@@ -23,9 +23,9 @@ sub description {
     my $desc;
     $desc .= ucfirst(abstract) . ".\n";
     $desc .= " " x 4 . "Like `runlist combine`, but <infiles> are genome positions.\n";
-    $desc .= " " x 4 . "I:1-100.\n";
-    $desc .= " " x 4 . "I(+):90-150.\n";
-    $desc .= " " x 4 . "S288c.I(-):190-200.\tSepcies names will be ommitted.\n";
+    $desc .= " " x 4 . "I:1-100\n";
+    $desc .= " " x 4 . "I(+):90-150\n";
+    $desc .= " " x 4 . "S288c.I(-):190-200\tSpecies names will be omitted..\n";
     return $desc;
 }
 

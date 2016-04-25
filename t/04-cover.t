@@ -3,7 +3,7 @@ use App::Cmd::Tester;
 
 use App::RL;
 
-my $result = test_app( 'App::RL' => [qw(covers t/S288c.txt -o stdout)] );
+my $result = test_app( 'App::RL' => [qw(cover t/S288c.txt -o stdout)] );
 
 is( ( scalar grep {/\S/} split( /\n/, $result->stdout ) ), 3, 'line count' );
 unlike( $result->stdout, qr{S288c},  'species names' );

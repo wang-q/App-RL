@@ -16,7 +16,7 @@ App::RL - operating chromosome runlist files
 
        combine: combine multiple sets of runlists
        compare: compare 2 chromosome runlists
-        covers: output covers on chromosomes
+         cover: output covers on chromosomes
         genome: convert chr.size to runlists
          merge: merge runlist yaml files
           some: extract some records

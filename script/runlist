@@ -28,8 +28,8 @@ perl -I lib/ script/runlist combine t/Atha.yml -o stdout
 
 perl -I lib/ script/runlist some t/Atha.yml t/Atha.list -o stdout
 
-perl -I lib/ script/runlist covers t/S288c.txt -o stdout
-perl -I lib/ t/11-covers.t
+perl -I lib/ script/runlist cover t/S288c.txt -o stdout
+perl -I lib/ t/11-cover.t
 
 perl -I lib/ script/runlist compare t/r1.yml t/r2.yml --op intersect -o stdout
 
