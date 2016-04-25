@@ -11,7 +11,7 @@ sub opt_spec {
         [ "size|s=s", "chr.sizes", { required => 1 } ],
         [ "remove|r", "Remove 'chr0' from chromosome names." ],
         [ "mk",       "YAML file contains multiple sets of runlists." ],
-        [ "all",      "Only write whole genome stats" ],
+        [ "all",      "Only write whole genome stats." ],
     );
 }
 
