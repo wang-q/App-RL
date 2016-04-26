@@ -192,7 +192,7 @@ sub csv_lines {
 
         my $c1    = $size / $length;
         my $c2    = $s2_length == 0 ? 0 : $s2_size / $s2_length;
-        my $ratio = $c2 == 0 ? 0 : $c2 / $c1;
+        my $ratio = $c1 == 0 ? 0 : $c2 / $c1;
 
         my $line = sprintf "%s,%d,%d,%d,%d,%.4f,%.4f,%.4f\n", $chr, $length, $size, $s2_length,
             $s2_size, $c1, $c2, $ratio;
@@ -201,7 +201,7 @@ sub csv_lines {
 
     my $all_c1    = $all_size / $all_length;
     my $all_c2    = $all_s2_length == 0 ? 0 : $all_s2_size / $all_s2_length;
-    my $all_ratio = $all_c2 == 0 ? 0 : $all_c2 / $all_c1;
+    my $all_ratio = $all_c1 == 0 ? 0 : $all_c2 / $all_c1;
 
     # only keep whole genome
     my $all_line = sprintf "all,%d,%d,%d,%d,%.4f,%.4f,%.4f\n", $all_length, $all_size,
