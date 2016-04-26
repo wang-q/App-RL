@@ -3,7 +3,7 @@ package App::RL::Command::span;
 use App::RL -command;
 use App::RL::Common qw(:all);
 
-use constant abstract => 'operating spans in runlists';
+use constant abstract => 'operate spans in a YAML file';
 
 sub opt_spec {
     return (
@@ -43,7 +43,7 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    $self->usage_error("This command need one input files.") unless @$args;
+    $self->usage_error("This command need one input file.") unless @$args;
     $self->usage_error("The input file [@{[$args->[0]]}] doesn't exist.")
         unless -e $args->[0];
 
@@ -66,7 +66,7 @@ sub validate_args {
         $opt->{op} = 'fill';
     }
     else {
-        Carp::confess "[@{[$opt->{op}]}] invalid\n";
+        Carp::confess "[@{[$opt->{op}]}] is invalid\n";
     }
 
     if ( !exists $opt->{outfile} ) {
