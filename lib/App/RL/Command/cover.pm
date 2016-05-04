@@ -1,4 +1,7 @@
 package App::RL::Command::cover;
+use strict;
+use warnings;
+use autodie;
 
 use App::RL -command;
 use App::RL::Common qw(:all);
@@ -51,7 +54,7 @@ sub execute {
         my $in_fh = IO::Zlib->new( $infile, "rb" );
 
         while ( !$in_fh->eof ) {
-            $line = $in_fh->getline;
+            my $line = $in_fh->getline;
             next if substr( $line, 0, 1 ) eq "#";
             chomp $line;
 
