@@ -76,7 +76,10 @@ sub execute {
     for my $chr_name ( keys %count_of ) {
         $count_of{$chr_name} = $count_of{$chr_name}->runlist;
     }
-
+    
+    #----------------------------#
+    # Output
+    #----------------------------#
     my $out_fh;
     if ( lc( $opt->{outfile} ) eq "stdout" ) {
         $out_fh = *STDOUT;
@@ -85,12 +88,7 @@ sub execute {
         open $out_fh, ">", $opt->{outfile};
     }
 
-    if ( defined $opt->{name} ) {
-        print {$out_fh} YAML::Syck::Dump( $count_of{ $opt->{name} } );
-    }
-    else {
-        print {$out_fh} YAML::Syck::Dump( \%count_of );
-    }
+    print {$out_fh} YAML::Syck::Dump( \%count_of );
     close $out_fh;
 }
 
