@@ -3,7 +3,7 @@ package App::RL::Command::cover;
 use App::RL -command;
 use App::RL::Common qw(:all);
 
-use constant abstract => 'output covers on chromosomes';
+use constant abstract => 'output covers of positions on chromosomes';
 
 sub opt_spec {
     return (
@@ -24,7 +24,7 @@ sub description {
     $desc .= " " x 4 . "Like `runlist combine`, but <infiles> are genome positions.\n";
     $desc .= " " x 4 . "I:1-100\n";
     $desc .= " " x 4 . "I(+):90-150\n";
-    $desc .= " " x 4 . "S288c.I(-):190-200\tSpecies names will be omitted..\n";
+    $desc .= " " x 4 . "S288c.I(-):190-200\tSpecies names will be omitted.\n";
     return $desc;
 }
 
