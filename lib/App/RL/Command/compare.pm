@@ -1,4 +1,7 @@
 package App::RL::Command::compare;
+use strict;
+use warnings;
+use autodie;
 
 use App::RL -command;
 use App::RL::Common qw(:all);
@@ -61,7 +64,7 @@ sub validate_args {
     }
 
     if ( !exists $opt->{outfile} ) {
-        $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . $opt->{op} . ".yml";
+        $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . "." . $opt->{op} . ".yml";
     }
 }
 
@@ -71,45 +74,45 @@ sub execute {
     #----------------------------#
     # Loading
     #----------------------------#
-    my $all_name_set = Set::Scalar->new;
+    my $chrs = Set::Scalar->new;
 
     # file1
-    my $s1_of = {};
-    my @keys;
+    my $set_of = {};
+    my @names;
     if ( $opt->{mk} ) {
         my $yml = YAML::Syck::LoadFile( $args->[0] );
-        @keys = sort keys %{$yml};
+        @names = sort keys %{$yml};
 
-        for my $key (@keys) {
-            $s1_of->{$key} = runlist2set( $yml->{$key}, $opt->{remove} );
-            $all_name_set->insert( keys %{ $s1_of->{$key} } );
+        for my $name (@names) {
+            $set_of->{$name} = runlist2set( $yml->{$name}, $opt->{remove} );
+            $chrs->insert( keys %{ $set_of->{$name} } );
         }
     }
     else {
-        @keys = ("__single");
-        $s1_of->{__single}
+        @names = ("__single");
+        $set_of->{__single}
             = runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
-        $all_name_set->insert( keys %{ $s1_of->{__single} } );
+        $chrs->insert( keys %{ $set_of->{__single} } );
     }
 
     # file2
-    my $s2;
+    my $set_single;
     {
-        $s2 = runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
-        $all_name_set->insert( keys %{$s2} );
+        $set_single = runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
+        $chrs->insert( keys %{$set_single} );
     }
 
     #----------------------------#
     # Operating
     #----------------------------#
-    my $op_result_of = { map { $_ => {} } @keys };
+    my $op_result_of = { map { $_ => {} } @names };
 
-    for my $key (@keys) {
-        my $s1 = $s1_of->{$key};
+    for my $name (@names) {
+        my $set_one = $set_of->{$name};
 
         # give empty set to non-existing chrs
-        for my $s ( $s1, $s2 ) {
-            for my $chr ( sort $all_name_set->members ) {
+        for my $s ( $set_one, $set_single ) {
+            for my $chr ( sort $chrs->members ) {
                 if ( !exists $s->{$chr} ) {
                     $s->{$chr} = new_set();
                 }
@@ -117,10 +120,10 @@ sub execute {
         }
 
         # operate on each chr
-        for my $chr ( sort $all_name_set->members ) {
+        for my $chr ( sort $chrs->members ) {
             my $op     = $opt->{op};
-            my $op_set = $s1->{$chr}->$op( $s2->{$chr} );
-            $op_result_of->{$key}{$chr} = $op_set->runlist;
+            my $op_set = $set_one->{$chr}->$op( $set_single->{$chr} );
+            $op_result_of->{$name}{$chr} = $op_set->runlist;
         }
     }
 
