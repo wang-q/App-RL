@@ -8,7 +8,6 @@ use constant abstract => 'output covers on chromosomes';
 sub opt_spec {
     return (
         [ "outfile|o=s", "Output filename. [stdout] for screen." ],
-        [ "remove|r",    "Remove 'chr0' from chromosome names." ],
     );
 }
 
