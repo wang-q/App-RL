@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.13  2016-05-05 05:09:40 CST
+    - Command position
+
 0.2.12  2016-04-27 19:18:02 CST
     - Release to CPAN
 
@@ -31,10 +34,10 @@ Revision history for App-RL
     - Add travis-ci
 
 0.2.3  2016-04-08 10:47:40 CST
-    - runlist stat2
+    - Command stat2
 
 0.2.2  2016-04-06 01:29:29 CST
-    - runlist covers
+    - Command covers
 
 0.2.1  2016-04-03 05:04:04 CST
     - Back to AlignDB::IntSpan
@@ -44,19 +47,19 @@ Revision history for App-RL
     - Switch to AlignDB::IntSpanXS
 
 0.1.9  2016-03-29 22:06:48 CST
-    - runlist some
+    - Command some
 
 0.1.8  2016-03-29 21:19:57 CST
-    - runlist combine: combine multiple keys
+    - Command combine: combine multiple keys
 
 0.1.7  2016-03-29 20:30:45 CST
     - add --mk to `runlist span`
 
 0.1.6  2016-03-27 05:48:27 CST
-    - runlist span: operating spans in runlists
+    - Command span: operating spans in runlists
 
 0.1.5  2016-03-27 04:31:28 CST
-    - runlist genome
+    - Command genome
 
 0.1.4  2016-01-15 17:14:37 CST
     - A real Changes file
