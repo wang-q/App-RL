@@ -39,3 +39,5 @@ perl -I lib/ script/runlist stat2 --op intersect t/intergenic.yml t/repeat.yml -
 perl -I lib/ t/12-stat2.t
 
 perl ~/Scripts/egas/compare_runlist.pl --op intersect -f1 t/intergenic.yml -f2 t/repeat.yml
+
+perl -I lib/ script/runlist position --op overlap t/intergenic.yml t/S288c.txt -o stdout
