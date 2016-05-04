@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use autodie;
 
-use 5.008001;
+use 5.010000;
 
 use Carp;
 use IO::Zlib;
