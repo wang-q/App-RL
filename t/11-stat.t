@@ -16,4 +16,9 @@ is( ( scalar grep {/\S/} split( /\n/, $result->stdout ) ), 2, 'line count' );
 is( ( scalar( split ",", ( split( /\n/, $result->stdout ) )[1] ) ), 3, 'field count' );
 unlike( $result->stdout, qr{all}, 'no literal all' );
 
-done_testing(7);
+$result = test_app( 'App::RL' => [qw(stat t/Atha.yml -s t/Atha.chr.sizes --mk --all -o stdout)] );
+is( ( scalar grep {/\S/} split( /\n/, $result->stdout ) ), 6, 'line count' );
+is( ( scalar( split ",", ( split( /\n/, $result->stdout ) )[1] ) ), 4, 'field count' );
+unlike( $result->stdout, qr{all}, 'no literal all' );
+
+done_testing(10);
