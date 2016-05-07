@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.16  2016-05-07 16:10:40 CST
+    - Improve test coverage
+
 0.2.15  2016-05-07 15:23:55 CST
     - Travis CI
 
