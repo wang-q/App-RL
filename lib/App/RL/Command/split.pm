@@ -58,8 +58,6 @@ sub execute {
                 $yml->{$key} );
         }
     }
-
-    return;
 }
 
 1;

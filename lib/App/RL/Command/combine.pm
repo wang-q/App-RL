@@ -98,7 +98,6 @@ sub execute {
     print {$out_fh} YAML::Syck::Dump($op_result_of);
 
     close $out_fh;
-    return;
 }
 
 1;

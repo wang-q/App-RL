@@ -60,7 +60,6 @@ sub execute {
     print {$out_fh} YAML::Syck::Dump($master);
 
     close $out_fh;
-    return;
 }
 
 1;

@@ -74,7 +74,6 @@ sub execute {
     print {$out_fh} YAML::Syck::Dump($out_ref);
 
     close $out_fh;
-    return;
 }
 
 1;

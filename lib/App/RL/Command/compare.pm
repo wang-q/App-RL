@@ -147,7 +147,6 @@ sub execute {
     }
 
     close $out_fh;
-    return;
 }
 
 1;

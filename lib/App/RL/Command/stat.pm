@@ -105,7 +105,6 @@ sub execute {
     }
 
     close $out_fh;
-    return;
 }
 
 sub csv_lines {
