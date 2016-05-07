@@ -7,21 +7,22 @@ App::RL - operating chromosome runlist files
 
 # SYNOPSIS
 
-    runlist <command> [-?h] [long options...]
-        -? -h --help    show help
+      runlist <command> [-?h] [long options...]
+          -? -h --help    show help
 
-    Available commands:
+      Available commands:
 
       commands: list the application's commands
           help: display a command's help screen
-
+    
        combine: combine multiple sets of runlists
        compare: compare 2 chromosome runlists
-         cover: output covers on chromosomes
+         cover: output covers of positions on chromosomes
         genome: convert chr.size to runlists
          merge: merge runlist yaml files
+      position: compare runlists against positions
           some: extract some records
-          span: operating spans in runlists
+          span: operate spans in a YAML file
          split: split runlist yaml files
           stat: coverage on chromosomes for runlists
          stat2: coverage on another runlist for runlists

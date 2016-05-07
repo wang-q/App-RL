@@ -1,7 +1,10 @@
 package App::RL::Command::merge;
+use strict;
+use warnings;
+use autodie;
 
 use App::RL -command;
-use App::RL::Common qw(:all);
+use App::RL::Common;
 
 use constant abstract => 'merge runlist yaml files';
 

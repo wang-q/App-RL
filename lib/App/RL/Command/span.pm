@@ -1,7 +1,10 @@
 package App::RL::Command::span;
+use strict;
+use warnings;
+use autodie;
 
 use App::RL -command;
-use App::RL::Common qw(:all);
+use App::RL::Common;
 
 use constant abstract => 'operate spans in a YAML file';
 
@@ -87,13 +90,13 @@ sub execute {
         @keys = sort keys %{$yml};
 
         for my $key (@keys) {
-            $s_of->{$key} = runlist2set( $yml->{$key}, $opt->{remove} );
+            $s_of->{$key} = App::RL::Common::runlist2set( $yml->{$key}, $opt->{remove} );
         }
     }
     else {
         @keys = ("__single");
         $s_of->{__single}
-            = runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+            = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
     }
 
     #----------------------------#

@@ -19,19 +19,20 @@ App::RL - operating chromosome runlist files
 
     Available commands:
 
-      commands: list the application's commands
-          help: display a command's help screen
-
-       combine: combine multiple sets of runlists
-       compare: compare 2 chromosome runlists
-         cover: output covers on chromosomes
-        genome: convert chr.size to runlists
-         merge: merge runlist yaml files
-          some: extract some records
-          span: operating spans in runlists
-         split: split runlist yaml files
-          stat: coverage on chromosomes for runlists
-         stat2: coverage on another runlist for runlists
+    commands: list the application's commands
+        help: display a command's help screen
+  
+     combine: combine multiple sets of runlists
+     compare: compare 2 chromosome runlists
+       cover: output covers of positions on chromosomes
+      genome: convert chr.size to runlists
+       merge: merge runlist yaml files
+    position: compare runlists against positions
+        some: extract some records
+        span: operate spans in a YAML file
+       split: split runlist yaml files
+        stat: coverage on chromosomes for runlists
+       stat2: coverage on another runlist for runlists
 
 See C<runlist commands> for usage information.
 

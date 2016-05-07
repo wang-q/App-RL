@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 
 BEGIN {
-    use_ok( 'App::RL::Common', qw(decode_header encode_header) );
+    use_ok('App::RL::Common');
 }
 
 {
@@ -59,7 +59,7 @@ BEGIN {
 
     for my $i ( 0 .. $#data_fas_header ) {
         my ( $header, $expected ) = @{ $data_fas_header[$i] };
-        my $result = decode_header($header);
+        my $result = App::RL::Common::decode_header($header);
 
         for my $key ( keys %{$expected} ) {
             is( $expected->{$key}, $result->{$key}, "fas decode $i" );
@@ -69,8 +69,8 @@ BEGIN {
             is( $expected->{$key}, $result->{$key}, "fas decode $i" );
         }
 
-        is( $header, encode_header($expected), "fas encode expected $i" );
-        is( $header, encode_header($result),   "fas encode result $i" );
+        is( $header, App::RL::Common::encode_header($expected), "fas encode expected $i" );
+        is( $header, App::RL::Common::encode_header($result),   "fas encode result $i" );
     }
 }
 
@@ -85,7 +85,7 @@ BEGIN {
 
     for my $i ( 0 .. $#data_fa_header ) {
         my ( $header, $expected ) = @{ $data_fa_header[$i] };
-        my $result = decode_header($header);
+        my $result = App::RL::Common::decode_header($header);
         for my $key ( keys %{$expected} ) {
             is( $expected->{$key}, $result->{$key}, "fa decode $i" );
         }

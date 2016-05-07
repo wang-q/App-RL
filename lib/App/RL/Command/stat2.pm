@@ -1,7 +1,10 @@
 package App::RL::Command::stat2;
+use strict;
+use warnings;
+use autodie;
 
 use App::RL -command;
-use App::RL::Common qw(:all);
+use App::RL::Common;
 
 use constant abstract => 'coverage on another runlist for runlists';
 
@@ -73,7 +76,7 @@ sub execute {
     #----------------------------#
     # Loading
     #----------------------------#
-    my $length_of = read_sizes( $opt->{size}, $opt->{remove} );
+    my $length_of = App::RL::Common::read_sizes( $opt->{size}, $opt->{remove} );
 
     # file1
     my $s1_of = {};
@@ -83,17 +86,17 @@ sub execute {
         @keys = sort keys %{$yml};
 
         for my $key (@keys) {
-            $s1_of->{$key} = runlist2set( $yml->{$key}, $opt->{remove} );
+            $s1_of->{$key} = App::RL::Common::runlist2set( $yml->{$key}, $opt->{remove} );
         }
     }
     else {
         @keys = ("__single");
         $s1_of->{__single}
-            = runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+            = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
     }
 
     # file2
-    my $s2 = runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
+    my $s2 = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
 
     #----------------------------#
     # Operating
@@ -107,7 +110,7 @@ sub execute {
         for my $s ( $s1, $s2 ) {
             for my $chr ( sort keys %{$length_of} ) {
                 if ( !exists $s->{$chr} ) {
-                    $s->{$chr} = new_set();
+                    $s->{$chr} = App::RL::Common::new_set();
                 }
             }
         }

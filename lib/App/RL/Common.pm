@@ -15,18 +15,6 @@ use YAML::Syck;
 
 use AlignDB::IntSpan;
 
-use base 'Exporter';
-use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
-@ISA         = qw(Exporter);
-%EXPORT_TAGS = (
-    all => [
-        qw{
-            read_sizes read_names new_set runlist2set decode_header encode_header
-            },
-    ],
-);
-@EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
 # The only entrance for AlignDB::IntSpan or AlignDB::IntSpanXS
 sub new_set {
     return AlignDB::IntSpan->new;

@@ -1,7 +1,10 @@
 package App::RL::Command::some;
+use strict;
+use warnings;
+use autodie;
 
 use App::RL -command;
-use App::RL::Common qw(:all);
+use App::RL::Common;
 
 use constant abstract => 'extract some records';
 
@@ -46,7 +49,7 @@ sub execute {
     #----------------------------#
     my $yml          = YAML::Syck::LoadFile( $args->[0] );
     my $all_name_set = Set::Scalar->new;
-    for my $n ( @{ read_names( $args->[1] ) } ) {
+    for my $n ( @{ App::RL::Common::read_names( $args->[1] ) } ) {
         $all_name_set->insert($n);
     }
 

@@ -4,7 +4,7 @@ use warnings;
 use autodie;
 
 use App::RL -command;
-use App::RL::Common qw(:all);
+use App::RL::Common;
 
 use constant abstract => 'output covers of positions on chromosomes';
 
@@ -58,7 +58,7 @@ sub execute {
             next if substr( $line, 0, 1 ) eq "#";
             chomp $line;
 
-            my $info = decode_header($line);
+            my $info = App::RL::Common::decode_header($line);
 
             next unless defined $info->{chr_name};
             next unless defined $info->{chr_start};
@@ -66,7 +66,7 @@ sub execute {
 
             my $chr_name = $info->{chr_name};
             if ( !exists $count_of{$chr_name} ) {
-                $count_of{$chr_name} = new_set();
+                $count_of{$chr_name} = App::RL::Common::new_set();
             }
             $count_of{$chr_name}->add_pair( $info->{chr_start}, $info->{chr_end} );
         }

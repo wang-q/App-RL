@@ -1,7 +1,10 @@
 package App::RL::Command::genome;
+use strict;
+use warnings;
+use autodie;
 
 use App::RL -command;
-use App::RL::Common qw(:all);
+use App::RL::Common;
 
 use constant abstract => 'convert chr.size to runlists';
 
@@ -43,14 +46,14 @@ sub execute {
     #----------------------------#
     # Loading
     #----------------------------#
-    my $length_of = read_sizes( $args->[0], $opt->{remove} );
+    my $length_of = App::RL::Common::read_sizes( $args->[0], $opt->{remove} );
 
     #----------------------------#
     # Operating
     #----------------------------#
     my $r_of = {};
     for my $key ( keys %{$length_of} ) {
-        my $set = new_set();
+        my $set = App::RL::Common::new_set();
         $set->add_pair( 1, $length_of->{$key} );
         $r_of->{$key} = $set->runlist;
     }

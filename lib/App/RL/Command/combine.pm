@@ -1,7 +1,10 @@
 package App::RL::Command::combine;
+use strict;
+use warnings;
+use autodie;
 
 use App::RL -command;
-use App::RL::Common qw(:all);
+use App::RL::Common;
 
 use constant abstract => 'combine multiple sets of runlists';
 
@@ -53,21 +56,21 @@ sub execute {
 
     if ( ref $yml->{ $keys[0] } eq 'HASH' ) {
         for my $key (@keys) {
-            $s_of->{$key} = runlist2set( $yml->{$key}, $opt->{remove} );
+            $s_of->{$key} = App::RL::Common::runlist2set( $yml->{$key}, $opt->{remove} );
             $all_name_set->insert( keys %{ $s_of->{$key} } );
         }
     }
     else {
         @keys = ("__single");
         $s_of->{__single}
-            = runlist2set( $yml, $opt->{remove} );
+            = App::RL::Common::runlist2set( $yml, $opt->{remove} );
         $all_name_set->insert( keys %{ $s_of->{__single} } );
     }
 
     #----------------------------#
     # Operating
     #----------------------------#
-    my $op_result_of = { map { $_ => new_set() } $all_name_set->members };
+    my $op_result_of = { map { $_ => App::RL::Common::new_set() } $all_name_set->members };
 
     for my $key (@keys) {
         my $s = $s_of->{$key};

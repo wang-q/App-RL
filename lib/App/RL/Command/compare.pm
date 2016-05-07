@@ -4,7 +4,7 @@ use warnings;
 use autodie;
 
 use App::RL -command;
-use App::RL::Common qw(:all);
+use App::RL::Common;
 
 use constant abstract => 'compare 2 chromosome runlists';
 
@@ -84,21 +84,22 @@ sub execute {
         @names = sort keys %{$yml};
 
         for my $name (@names) {
-            $set_of->{$name} = runlist2set( $yml->{$name}, $opt->{remove} );
+            $set_of->{$name} = App::RL::Common::runlist2set( $yml->{$name}, $opt->{remove} );
             $chrs->insert( keys %{ $set_of->{$name} } );
         }
     }
     else {
         @names = ("__single");
         $set_of->{__single}
-            = runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+            = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
         $chrs->insert( keys %{ $set_of->{__single} } );
     }
 
     # file2
     my $set_single;
     {
-        $set_single = runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
+        $set_single
+            = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
         $chrs->insert( keys %{$set_single} );
     }
 
@@ -114,7 +115,7 @@ sub execute {
         for my $s ( $set_one, $set_single ) {
             for my $chr ( sort $chrs->members ) {
                 if ( !exists $s->{$chr} ) {
-                    $s->{$chr} = new_set();
+                    $s->{$chr} = App::RL::Common::new_set();
                 }
             }
         }
