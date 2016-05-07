@@ -1,6 +1,8 @@
 Revision history for App-RL
 
 {{$NEXT}}
+
+0.2.14  2016-05-07 14:37:32 CST
     - Export nothing. Remove duplicated functions
     - Add strict and warnings to every modules
 
