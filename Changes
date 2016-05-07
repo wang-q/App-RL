@@ -1,6 +1,7 @@
 Revision history for App-RL
 
 {{$NEXT}}
+    - Travis CI
 
 0.2.14  2016-05-07 14:37:32 CST
     - Export nothing. Remove duplicated functions
