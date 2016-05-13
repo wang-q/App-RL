@@ -36,16 +36,12 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    #print YAML::Syck::Dump {
-    #    opt  => $opt,
-    #    args => $args,
-    #};
-
-    $self->usage_error("This command need two input files.") unless @$args == 2;
-    $self->usage_error("The first input file [@{[$args->[0]]}] doesn't exist.")
-        unless -e $args->[0];
-    $self->usage_error("The second input file [@{[$args->[1]]}] doesn't exist.")
-        unless -e $args->[1];
+    $self->usage_error("This command need two or more input files.") unless @{$args} >= 2;
+    for ( @{$args} ) {
+        if ( !Path::Tiny::path($_)->is_file ) {
+            $self->usage_error("The input file [$_] doesn't exist.");
+        }
+    }
 
     if ( $opt->{op} =~ /^dif/i ) {
         $opt->{op} = 'diff';
@@ -95,12 +91,16 @@ sub execute {
         $chrs->insert( keys %{ $set_of->{__single} } );
     }
 
-    # file2
-    my $set_single;
+    # file2 and more
+    my @set_singles;
     {
-        $set_single
-            = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[1] ), $opt->{remove} );
-        $chrs->insert( keys %{$set_single} );
+        my $argc = scalar @{$args};
+        for my $i ( 1 .. $argc - 1 ) {
+            my $s = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[$i] ),
+                $opt->{remove} );
+            $chrs->insert( keys %{$s} );
+            push @set_singles, $s;
+        }
     }
 
     #----------------------------#
@@ -112,7 +112,7 @@ sub execute {
         my $set_one = $set_of->{$name};
 
         # give empty set to non-existing chrs
-        for my $s ( $set_one, $set_single ) {
+        for my $s ( $set_one, @set_singles ) {
             for my $chr ( sort $chrs->members ) {
                 if ( !exists $s->{$chr} ) {
                     $s->{$chr} = App::RL::Common::new_set();
@@ -123,7 +123,10 @@ sub execute {
         # operate on each chr
         for my $chr ( sort $chrs->members ) {
             my $op     = $opt->{op};
-            my $op_set = $set_one->{$chr}->$op( $set_single->{$chr} );
+            my $op_set = $set_one->{$chr}->copy;
+            for my $s (@set_singles) {
+                $op_set = $op_set->$op( $s->{$chr} );
+            }
             $op_result_of->{$name}{$chr} = $op_set->runlist;
         }
     }
