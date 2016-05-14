@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.18  2016-05-14 20:39:39 CST
+    - Multiple infiles for command compare
+
 0.2.17  2016-05-12 03:52:40 CST
     - Specify versions of dependancies
 
