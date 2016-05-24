@@ -9,9 +9,7 @@ use App::RL::Common;
 use constant abstract => 'output covers of positions on chromosomes';
 
 sub opt_spec {
-    return (
-        [ "outfile|o=s", "Output filename. [stdout] for screen." ],
-    );
+    return ( [ "outfile|o=s", "Output filename. [stdout] for screen." ], );
 }
 
 sub usage_desc {
@@ -24,7 +22,8 @@ sub usage_desc {
 sub description {
     my $desc;
     $desc .= ucfirst(abstract) . ".\n";
-    $desc .= " " x 4 . "Like `runlist combine`, but <infiles> are genome positions.\n";
+    $desc .= " " x 4
+        . "Like `runlist combine`, but <infiles> are genome positions.\n";
     $desc .= " " x 4 . "I:1-100\n";
     $desc .= " " x 4 . "I(+):90-150\n";
     $desc .= " " x 4 . "S288c.I(-):190-200\tSpecies names will be omitted.\n";
@@ -34,8 +33,11 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    $self->usage_error("This command need one or more input files.") unless @{$args};
+    if ( !@{$args} ) {
+        $self->usage_error("This command need one or more input files.");
+    }
     for ( @{$args} ) {
+        next if lc $_ eq "stdin";
         if ( !Path::Tiny::path($_)->is_file ) {
             $self->usage_error("The input file [$_] doesn't exist.");
         }
@@ -68,7 +70,8 @@ sub execute {
             if ( !exists $count_of{$chr_name} ) {
                 $count_of{$chr_name} = App::RL::Common::new_set();
             }
-            $count_of{$chr_name}->add_pair( $info->{chr_start}, $info->{chr_end} );
+            $count_of{$chr_name}
+                ->add_pair( $info->{chr_start}, $info->{chr_end} );
         }
 
         $in_fh->close;
@@ -78,7 +81,7 @@ sub execute {
     for my $chr_name ( keys %count_of ) {
         $count_of{$chr_name} = $count_of{$chr_name}->runlist;
     }
-    
+
     #----------------------------#
     # Output
     #----------------------------#

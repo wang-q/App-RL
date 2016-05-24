@@ -39,11 +39,15 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    $self->usage_error("This command need two input files.") unless @$args == 2;
-    $self->usage_error("The first input file [@{[$args->[0]]}] doesn't exist.")
-        unless -e $args->[0];
-    $self->usage_error("The second input file [@{[$args->[1]]}] doesn't exist.")
-        unless -e $args->[1];
+    if ( @{$args} != 2 ) {
+        $self->usage_error("This command need two input file.");
+    }
+    for ( @{$args} ) {
+        next if lc $_ eq "stdin";
+        if ( !Path::Tiny::path($_)->is_file ) {
+            $self->usage_error("The input file [$_] doesn't exist.");
+        }
+    }
 
     if ( $opt->{op} =~ /^dif/i ) {
         $opt->{op} = 'diff';

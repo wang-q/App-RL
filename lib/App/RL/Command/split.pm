@@ -32,8 +32,11 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    $self->usage_error("This command need one input file.") unless @{$args} == 1;
+    if ( @{$args} != 1 ) {
+        $self->usage_error("This command need one input file.");
+    }
     for ( @{$args} ) {
+        next if lc $_ eq "stdin";
         if ( !Path::Tiny::path($_)->is_file ) {
             $self->usage_error("The input file [$_] doesn't exist.");
         }

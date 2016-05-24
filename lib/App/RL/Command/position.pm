@@ -39,8 +39,11 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    $self->usage_error("This command need two or more input files.") unless @$args >= 2;
+    if ( @{$args} < 2 ) {
+        $self->usage_error("This command need two or more input files.");
+    }
     for ( @{$args} ) {
+        next if lc $_ eq "stdin";
         if ( !Path::Tiny::path($_)->is_file ) {
             $self->usage_error("The input file [$_] doesn't exist.");
         }
