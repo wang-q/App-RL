@@ -34,9 +34,15 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    $self->usage_error("This command need one input file.") unless @$args;
-    $self->usage_error("The input file [@{[$args->[0]]}] doesn't exist.")
-        unless -e $args->[0];
+    if ( @{$args} != 1 ) {
+        $self->usage_error("This command need one input file.");
+    }
+    for ( @{$args} ) {
+        next if lc $_ eq "stdin";
+        if ( !Path::Tiny::path($_)->is_file ) {
+            $self->usage_error("The input file [$_] doesn't exist.");
+        }
+    }
 
     if ( !exists $opt->{outfile} ) {
         $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . ".csv";
@@ -49,22 +55,32 @@ sub execute {
     #----------------------------#
     # Loading
     #----------------------------#
+    my $infile;    # YAML::Syck::LoadFile handles IO::*
+    if ( lc $args->[0] eq 'stdin' ) {
+        $infile = *STDIN;
+    }
+    else {
+        $infile = $args->[0];
+    }
+
     my $length_of = App::RL::Common::read_sizes( $opt->{size}, $opt->{remove} );
 
     my $s_of = {};
     my @keys;
     if ( $opt->{mk} ) {
-        my $yml = YAML::Syck::LoadFile( $args->[0] );
+        my $yml = YAML::Syck::LoadFile($infile);
         @keys = sort keys %{$yml};
 
         for my $key (@keys) {
-            $s_of->{$key} = App::RL::Common::runlist2set( $yml->{$key}, $opt->{remove} );
+            $s_of->{$key}
+                = App::RL::Common::runlist2set( $yml->{$key}, $opt->{remove} );
         }
     }
     else {
         @keys = ("__single");
         $s_of->{__single}
-            = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+            = App::RL::Common::runlist2set( YAML::Syck::LoadFile($infile),
+            $opt->{remove} );
     }
 
     #----------------------------#
