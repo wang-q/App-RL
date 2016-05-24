@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.22  2016-05-24 13:57:04 CST
+    - Fix command compare
+
 0.2.21  2016-05-24 13:50:18 CST
     - Clean prompts
 
