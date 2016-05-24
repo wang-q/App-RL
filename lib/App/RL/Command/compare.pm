@@ -23,21 +23,21 @@ sub opt_spec {
 sub usage_desc {
     my $self = shift;
     my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infile1> <infile2>";
+    $desc .= " <infile1> <infile2> [more infiles]";
     return $desc;
 }
 
 sub description {
     my $desc;
-    $desc .= "Coverage statistics.\n";
+    $desc .= ucfirst(abstract) . ".\n";
     return $desc;
 }
 
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    if ( @{$args} != 2 ) {
-        $self->usage_error("This command need two input files.");
+    if ( @{$args} < 2 ) {
+        $self->usage_error("This command need two or more input files.");
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";
