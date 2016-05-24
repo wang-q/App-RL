@@ -1,6 +1,6 @@
 package App::RL;
 
-our $VERSION = '0.2.18';
+our $VERSION = '0.2.19';
 
 use App::Cmd::Setup -app;
 

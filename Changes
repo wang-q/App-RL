@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.19  2016-05-24 09:16:47 CST
+    - Command stat handles stdin
+
 0.2.18  2016-05-14 20:39:39 CST
     - Multiple infiles for command compare
 
