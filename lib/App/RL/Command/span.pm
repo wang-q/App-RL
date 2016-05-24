@@ -36,8 +36,10 @@ sub description {
     $desc .= "List of operations.\n";
     $desc .= " " x 4 . "cover:  a single span from min to max;\n";
     $desc .= " " x 4 . "holes:  all the holes in runlist;\n";
-    $desc .= " " x 4 . "trim:   remove N integers from each end of each span of runlist;\n";
-    $desc .= " " x 4 . "pad:    add N integers from each end of each span of runlist;\n";
+    $desc .= " " x 4
+        . "trim:   remove N integers from each end of each span of runlist;\n";
+    $desc .= " " x 4
+        . "pad:    add N integers from each end of each span of runlist;\n";
     $desc .= " " x 4 . "excise: remove all spans smaller than N;\n";
     $desc .= " " x 4 . "fill:   fill in all holes smaller than N.\n";
     return $desc;
@@ -83,20 +85,30 @@ sub execute {
     #----------------------------#
     # Loading
     #----------------------------#
+    my $infile;    # YAML::Syck::LoadFile handles IO::*
+    if ( lc $args->[0] eq 'stdin' ) {
+        $infile = *STDIN;
+    }
+    else {
+        $infile = $args->[0];
+    }
+
     my $s_of = {};
     my @keys;
     if ( $opt->{mk} ) {
-        my $yml = YAML::Syck::LoadFile( $args->[0] );
+        my $yml = YAML::Syck::LoadFile($infile);
         @keys = sort keys %{$yml};
 
         for my $key (@keys) {
-            $s_of->{$key} = App::RL::Common::runlist2set( $yml->{$key}, $opt->{remove} );
+            $s_of->{$key}
+                = App::RL::Common::runlist2set( $yml->{$key}, $opt->{remove} );
         }
     }
     else {
         @keys = ("__single");
         $s_of->{__single}
-            = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+            = App::RL::Common::runlist2set( YAML::Syck::LoadFile($infile),
+            $opt->{remove} );
     }
 
     #----------------------------#
