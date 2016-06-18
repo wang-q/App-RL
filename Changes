@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.23  2016-06-19 03:00:12 CST
+    - Change field names of decode_header()
+
 0.2.22  2016-05-24 13:57:04 CST
     - Fix command compare
 
