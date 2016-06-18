@@ -61,17 +61,13 @@ sub execute {
             chomp $line;
 
             my $info = App::RL::Common::decode_header($line);
+            next unless App::RL::Common::info_is_valid($info);
 
-            next unless defined $info->{chr_name};
-            next unless defined $info->{chr_start};
-            next unless defined $info->{chr_end};
-
-            my $chr_name = $info->{chr_name};
+            my $chr_name = $info->{chr};
             if ( !exists $count_of{$chr_name} ) {
                 $count_of{$chr_name} = App::RL::Common::new_set();
             }
-            $count_of{$chr_name}
-                ->add_pair( $info->{chr_start}, $info->{chr_end} );
+            $count_of{$chr_name}->add_pair( $info->{start}, $info->{end} );
         }
 
         $in_fh->close;

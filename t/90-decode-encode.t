@@ -11,50 +11,49 @@ BEGIN {
 
     my @data_fas_header = (
         [   q{S288c.I(+):27070-29557|species=yeast},
-            {   name       => "S288c",
-                chr_name   => "I",
-                chr_strand => "+",
-                chr_start  => 27070,
-                chr_end    => 29557,
-                species    => "yeast",
+            {   name    => "S288c",
+                chr     => "I",
+                strand  => "+",
+                start   => 27070,
+                end     => 29557,
+                species => "yeast",
             }
         ],
         [   q{S288c.I(+):27070-29557},
-            {   name       => "S288c",
-                chr_name   => "I",
-                chr_strand => "+",
-                chr_start  => 27070,
-                chr_end    => 29557,
+            {   name   => "S288c",
+                chr    => "I",
+                strand => "+",
+                start  => 27070,
+                end    => 29557,
             }
         ],
         [   q{I(+):90-150},
-            {   chr_name   => "I",
-                chr_strand => "+",
-                chr_start  => 90,
-                chr_end    => 150,
+            {   chr    => "I",
+                strand => "+",
+                start  => 90,
+                end    => 150,
             }
         ],
         [   q{S288c.I(-):190-200},
-            {   name       => "S288c",
-                chr_name   => "I",
-                chr_strand => "-",
-                chr_start  => 190,
-                chr_end    => 200,
+            {   name   => "S288c",
+                chr    => "I",
+                strand => "-",
+                start  => 190,
+                end    => 200,
             }
         ],
         [   q{I:1-100},
-            {   chr_name  => "I",
-                chr_start => 1,
-                chr_end   => 100,
+            {   chr   => "I",
+                start => 1,
+                end   => 100,
             }
         ],
         [   q{I:100},
-            {   chr_name  => "I",
-                chr_start => 100,
-                chr_end   => 100,
+            {   chr   => "I",
+                start => 100,
+                end   => 100,
             }
         ],
-        [ q{S288c}, { name => "S288c", } ],
     );
 
     for my $i ( 0 .. $#data_fas_header ) {
@@ -69,8 +68,16 @@ BEGIN {
             is( $expected->{$key}, $result->{$key}, "fas decode $i" );
         }
 
-        is( $header, App::RL::Common::encode_header($expected), "fas encode expected $i" );
-        is( $header, App::RL::Common::encode_header($result),   "fas encode result $i" );
+        is( $header,
+            App::RL::Common::encode_header($expected),
+            "fas encode expected $i"
+        );
+        is( $header,
+            App::RL::Common::encode_header($result),
+            "fas encode result $i"
+        );
+        ok( App::RL::Common::info_is_valid($result),   "result valid $i" );
+        ok( App::RL::Common::info_is_valid($expected), "expected valid $i" );
     }
 }
 
@@ -78,9 +85,9 @@ BEGIN {
     print "#fa headers\n";
 
     my @data_fa_header = (
-        [ q{S288c},                   { name => "S288c", } ],
-        [ q{S288c The baker's yeast}, { name => "S288c", } ],
-        [ q{1:-100},                  { name => "1:-100", } ],
+        [ q{S288c},                   { chr => "S288c", } ],
+        [ q{S288c The baker's yeast}, { chr => "S288c", } ],
+        [ q{1:-100},                  { chr => "1:-100", } ],
     );
 
     for my $i ( 0 .. $#data_fa_header ) {
@@ -92,4 +99,4 @@ BEGIN {
     }
 }
 
-done_testing(72);
+done_testing();

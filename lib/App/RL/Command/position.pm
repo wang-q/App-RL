@@ -63,7 +63,8 @@ sub validate_args {
     }
 
     if ( !exists $opt->{outfile} ) {
-        $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . "." . $opt->{op} . ".yml";
+        $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . "."
+            . $opt->{op} . ".yml";
     }
 }
 
@@ -75,7 +76,9 @@ sub execute {
     #----------------------------#
     my $chrs = Set::Scalar->new;
 
-    my $set_single = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
+    my $set_single
+        = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ),
+        $opt->{remove} );
     $chrs->insert( keys %{$set_single} );
 
     #----------------------------#
@@ -97,29 +100,28 @@ sub execute {
         chomp $line;
 
         my $info = App::RL::Common::decode_header($line);
+        next unless App::RL::Common::info_is_valid($info);
 
-        next unless defined $info->{chr_name};
-        next unless defined $info->{chr_start};
-        next unless defined $info->{chr_end};
-
-        $info->{chr_name} =~ s/chr0?//i if $opt->{remove};
+        $info->{chr} =~ s/chr0?//i if $opt->{remove};
         my $cur_positions = App::RL::Common::new_set();
-        $cur_positions->add_pair( $info->{chr_start}, $info->{chr_end} );
+        $cur_positions->add_pair( $info->{start}, $info->{end} );
 
         if ( $opt->{op} eq "overlap" ) {
-            if ( $chrs->has( $info->{chr_name} ) ) {
-                my $chr_single = $set_single->{ $info->{chr_name} };
+            if ( $chrs->has( $info->{chr} ) ) {
+                my $chr_single = $set_single->{ $info->{chr} };
                 if ( $chr_single->intersect($cur_positions)->is_not_empty ) {
-                    printf {$out_fh} "%s\n", App::RL::Common::encode_header($info);
+                    printf {$out_fh} "%s\n",
+                        App::RL::Common::encode_header($info);
                 }
             }
         }
 
         if ( $opt->{op} eq "non-overlap" ) {
-            if ( $chrs->has( $info->{chr_name} ) ) {
-                my $chr_single = $set_single->{ $info->{chr_name} };
+            if ( $chrs->has( $info->{chr} ) ) {
+                my $chr_single = $set_single->{ $info->{chr} };
                 if ( $chr_single->intersect($cur_positions)->is_empty ) {
-                    printf {$out_fh} "%s\n", App::RL::Common::encode_header($info);
+                    printf {$out_fh} "%s\n",
+                        App::RL::Common::encode_header($info);
                 }
             }
             else {
@@ -128,10 +130,11 @@ sub execute {
         }
 
         if ( $opt->{op} eq "superset" ) {
-            if ( $chrs->has( $info->{chr_name} ) ) {
-                my $chr_single = $set_single->{ $info->{chr_name} };
+            if ( $chrs->has( $info->{chr} ) ) {
+                my $chr_single = $set_single->{ $info->{chr} };
                 if ( $chr_single->superset($cur_positions) ) {
-                    printf {$out_fh} "%s\n", App::RL::Common::encode_header($info);
+                    printf {$out_fh} "%s\n",
+                        App::RL::Common::encode_header($info);
                 }
             }
         }

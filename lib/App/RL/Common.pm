@@ -68,12 +68,12 @@ sub decode_header {
     # S288.chrI(+):27070-29557|species=S288C
     my $head_qr = qr{
         (?:(?P<name>[\w_]+)\.)?
-        (?P<chr_name>[\w-]+)
-        (?:\((?P<chr_strand>.+)\))?
-        [\:]                        # spacer
-        (?P<chr_start>\d+)
-        [\_\-]?                      # spacer
-        (?P<chr_end>\d+)?
+        (?P<chr>[\w-]+)
+        (?:\((?P<strand>.+)\))?
+        [\:]                    # spacer
+        (?P<start>\d+)
+        [\_\-]?                 # spacer
+        (?P<end>\d+)?
     }xi;
 
     $header =~ $head_qr;
@@ -86,30 +86,30 @@ sub decode_header {
             $chr_end = $chr_start;
         }
         %info = (
-            name       => $1,
-            chr_name   => $chr_name,
-            chr_strand => $3,
-            chr_start  => $chr_start,
-            chr_end    => $chr_end,
+            name   => $1,
+            chr    => $chr_name,
+            strand => $3,
+            start  => $chr_start,
+            end    => $chr_end,
         );
-        if ( defined $info{chr_strand} ) {
-            if ( $info{chr_strand} eq '1' ) {
-                $info{chr_strand} = '+';
+        if ( defined $info{strand} ) {
+            if ( $info{strand} eq '1' ) {
+                $info{strand} = '+';
             }
-            elsif ( $info{chr_strand} eq '-1' ) {
-                $info{chr_strand} = '-';
+            elsif ( $info{strand} eq '-1' ) {
+                $info{strand} = '-';
             }
         }
     }
     else {
         $header =~ /^(\S+)/;
-        my $name = $1;
+        my $chr = $1;
         %info = (
-            name       => $name,
-            chr_name   => undef,
-            chr_strand => undef,
-            chr_start  => undef,
-            chr_end    => undef,
+            name   => undef,
+            chr    => $chr,
+            strand => undef,
+            start  => undef,
+            end    => undef,
         );
     }
 
@@ -127,37 +127,52 @@ sub decode_header {
     return \%info;
 }
 
+sub info_is_valid {
+    my $info = shift;
+
+    if ( ref $info eq "HASH" ) {
+        if ( exists $info->{chr} and exists $info->{start} ) {
+            if ( defined $info->{chr} and defined $info->{start} ) {
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
+
 sub encode_header {
     my $info           = shift;
     my $only_essential = shift;
 
     my $header;
     if ( defined $info->{name} ) {
-        if ( defined $info->{chr_name} ) {
+        if ( defined $info->{chr} ) {
             $header .= $info->{name};
-            $header .= "." . $info->{chr_name};
+            $header .= "." . $info->{chr};
         }
         else {
             $header .= $info->{name};
         }
     }
-    elsif ( defined $info->{chr_name} ) {
-        $header .= $info->{chr_name};
+    elsif ( defined $info->{chr} ) {
+        $header .= $info->{chr};
     }
 
-    if ( defined $info->{chr_strand} ) {
-        $header .= "(" . $info->{chr_strand} . ")";
+    if ( defined $info->{strand} ) {
+        $header .= "(" . $info->{strand} . ")";
     }
-    if ( defined $info->{chr_start} ) {
-        $header .= ":" . $info->{chr_start};
-        if ( $info->{chr_end} != $info->{chr_start} ) {
-            $header .= "-" . $info->{chr_end};
+    if ( defined $info->{start} ) {
+        $header .= ":" . $info->{start};
+        if ( $info->{end} != $info->{start} ) {
+            $header .= "-" . $info->{end};
         }
     }
 
     # additional keys
     if ( !$only_essential ) {
-        my %essential = map { $_ => 1 } qw{name chr_name chr_strand chr_start chr_end seq full_seq};
+        my %essential
+            = map { $_ => 1 } qw{name chr strand start end seq full_seq};
         my @parts;
         for my $key ( sort keys %{$info} ) {
             if ( !$essential{$key} ) {
