@@ -53,12 +53,8 @@ sub execute {
 
     my %count_of;    # YAML::Sync can't Dump tied hashes
     for my $infile ( @{$args} ) {
-        my $in_fh = IO::Zlib->new( $infile, "rb" );
-
-        while ( !$in_fh->eof ) {
-            my $line = $in_fh->getline;
+        for my $line ( App::RL::Common::read_lines($infile ) ) {
             next if substr( $line, 0, 1 ) eq "#";
-            chomp $line;
 
             my $info = App::RL::Common::decode_header($line);
             next unless App::RL::Common::info_is_valid($info);
@@ -69,8 +65,6 @@ sub execute {
             }
             $count_of{$chr_name}->add_pair( $info->{start}, $info->{end} );
         }
-
-        $in_fh->close;
     }
 
     # IntSpan to runlist

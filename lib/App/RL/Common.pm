@@ -43,6 +43,22 @@ sub read_names {
     return \@lines;
 }
 
+sub read_lines {
+    my $filename = shift;
+
+    if ( lc $filename eq "stdin" ) {
+        my @lines;
+        while (<STDIN>) {
+            chomp;
+            push @lines, $_;
+        }
+        return @lines;
+    }
+    else {
+        return Path::Tiny::path($filename)->lines( { chomp => 1 } );
+    }
+}
+
 sub runlist2set {
     my $runlist_of = shift;
     my $remove_chr = shift;
