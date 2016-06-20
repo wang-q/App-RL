@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.25  2016-06-20 16:41:50 CST
+    - Release to CPAN
+
 0.2.24  2016-06-20 03:43:53 CST
     - Add read_lines() to Common
 
