@@ -2,6 +2,9 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.26  2016-06-23 03:43:51 CST
+    - Accept '-' in names for command merge
+
 0.2.25  2016-06-20 16:41:50 CST
     - Release to CPAN
 
