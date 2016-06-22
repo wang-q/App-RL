@@ -58,7 +58,7 @@ sub execute {
     for my $file ( @{$args} ) {
         my $basename = Path::Tiny::path($file)->basename( ".yaml", ".yml" );
         my $dir = Path::Tiny::path($file)->parent->stringify;
-        my ($word) = split /[^\w]+/, $basename;
+        my ($word) = split /[^\w-]+/, $basename;
 
         my $content = YAML::Syck::LoadFile($file);
         $master->{$word} = $content;
