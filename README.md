@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/wang-q/App-RL.svg?branch=master)](https://travis-ci.org/wang-q/App-RL)
+[![codecov](https://codecov.io/gh/wang-q/App-RL/branch/master/graph/badge.svg)](https://codecov.io/gh/wang-q/App-RL)
 [![Cpan version](https://img.shields.io/cpan/v/App-RL.svg)](https://metacpan.org/release/App-RL)
 
 # NAME

@@ -1,6 +1,7 @@
 Revision history for App-RL
 
 {{$NEXT}}
+    - Add codecov badge
 
 0.2.26  2016-06-23 03:43:51 CST
     - Accept '-' in names for command merge
