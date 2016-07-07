@@ -1,6 +1,8 @@
 Revision history for App-RL
 
 {{$NEXT}}
+
+0.2.27  2016-07-07 22:27:57 CST
     - Add codecov badge
 
 0.2.26  2016-06-23 03:43:51 CST
