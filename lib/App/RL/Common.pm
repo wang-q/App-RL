@@ -16,6 +16,7 @@ use YAML::Syck;
 use AlignDB::IntSpan;
 
 # The only entrance for AlignDB::IntSpan or AlignDB::IntSpanXS
+#@returns AlignDB::IntSpan
 sub new_set {
     return AlignDB::IntSpan->new;
 }
