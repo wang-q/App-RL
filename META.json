@@ -67,7 +67,7 @@
          "web" : "https://github.com/wang-q/App-RL"
       }
    },
-   "version" : "0.2.27",
+   "version" : "0.2.28",
    "x_serialization_backend" : "JSON::XS version 3.01"
 }
 
