@@ -6,7 +6,7 @@ use autodie;
 use App::RL -command;
 use App::RL::Common;
 
-use constant abstract => 'convert chr.size to runlists';
+use constant abstract => 'convert chr.size to full genome runlists';
 
 sub opt_spec {
     return (
@@ -22,7 +22,7 @@ sub usage_desc {
 
 sub description {
     my $desc;
-    $desc .= "Full genome runlists.\n";
+    $desc .= ucfirst(abstract) . ".\n";
     return $desc;
 }
 

@@ -6,7 +6,7 @@ use autodie;
 use App::RL -command;
 use App::RL::Common;
 
-use constant abstract => 'coverage on another runlist for runlists';
+use constant abstract => 'coverage statistics on another runlist for runlists';
 
 sub opt_spec {
     return (
@@ -22,15 +22,12 @@ sub opt_spec {
 }
 
 sub usage_desc {
-    my $self = shift;
-    my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infile1> <infile2>";
-    return $desc;
+    return "runlist stat2 [options] <infile1> <infile2>";
 }
 
 sub description {
     my $desc;
-    $desc .= "Coverage statistics.\n";
+    $desc .= ucfirst(abstract) . ".\n";
     return $desc;
 }
 

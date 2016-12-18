@@ -18,7 +18,7 @@ sub usage_desc {
 
 sub description {
     my $desc;
-    $desc .= "Merge files of runlist.\n";
+    $desc .= ucfirst(abstract) . ".\n";
     return $desc;
 }
 

@@ -6,22 +6,19 @@ use autodie;
 use App::RL -command;
 use App::RL::Common;
 
-use constant abstract => 'extract some records';
+use constant abstract => 'extract some records from YAML file';
 
 sub opt_spec {
     return ( [ "outfile|o=s", "Output filename. [stdout] for screen." ], { show_defaults => 1, } );
 }
 
 sub usage_desc {
-    my $self = shift;
-    my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infile> <list.file>";
-    return $desc;
+    return "runlist some [options] <infile> <list.file>";
 }
 
 sub description {
     my $desc;
-    $desc .= "Extract some records from YAML file.\n";
+    $desc .= ucfirst(abstract) . ".\n";
     return $desc;
 }
 

@@ -25,6 +25,7 @@ sub usage_desc {
 
 sub description {
     my $desc;
+    $desc .= ucfirst(abstract) . ".\n";
     $desc .= "List of operations.\n";
     $desc .= " " x 4 . "cover:  a single span from min to max;\n";
     $desc .= " " x 4 . "holes:  all the holes in runlist;\n";
