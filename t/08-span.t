@@ -24,4 +24,4 @@ $result = test_app( 'App::RL' => [qw(span t/brca2.yml --op fill -n 1000 -o stdou
 is( ( scalar grep {/\S/} split( /\n/, $result->stdout ) ), 2, 'line count' );
 like( $result->stdout, qr{32325076\-32326613}, 'fill' );
 
-done_testing(5);
+done_testing();

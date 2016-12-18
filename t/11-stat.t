@@ -40,4 +40,4 @@ is( ( scalar( split ",", ( split( /\n/, $result->stdout ) )[1] ) ),
     4, 'field count' );
 unlike( $result->stdout, qr{all}, 'no literal all' );
 
-done_testing(10);
+done_testing();
