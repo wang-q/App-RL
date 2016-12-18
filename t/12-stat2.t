@@ -37,4 +37,11 @@ is( ( scalar( split ",", ( split( /\n/, $result->stdout ) )[1] ) ), 7, 'field co
 like( $result->stdout, qr{36721}, 'sum exists' );
 unlike( $result->stdout, qr{I.+XVI}s, 'chromosomes do not exist' );
 
+$result
+    = test_app( 'App::RL' =>
+        [qw(stat2 --op intersect t/Atha.yml t/Atha.trf.yml -s t/Atha.chr.sizes --all --mk -o stdout)] );
+is( ( scalar grep {/\S/} split( /\n/, $result->stdout ) ), 6, 'line count' );
+is( ( scalar( split ",", ( split( /\n/, $result->stdout ) )[1] ) ), 8, 'field count' );
+like( $result->stdout, qr{116}, 'intersection exists' );
+
 done_testing();
