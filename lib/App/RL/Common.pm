@@ -29,7 +29,7 @@ sub read_sizes {
     my %length_of;
     for (@lines) {
         my ( $key, $value ) = split /\t/;
-        $key =~ s/chr0?// if $remove_chr;
+        $key =~ s/chr0?//i if $remove_chr;
         $length_of{$key} = $value;
     }
 
@@ -68,7 +68,7 @@ sub runlist2set {
 
     for my $chr ( sort keys %{$runlist_of} ) {
         my $new_chr = $chr;
-        $new_chr =~ s/chr0?// if $remove_chr;
+        $new_chr =~ s/chr0?//i if $remove_chr;
         my $set = new_set();
         $set->add( $runlist_of->{$chr} );
         $set_of->{$new_chr} = $set;
