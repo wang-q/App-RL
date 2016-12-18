@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+use strict;
+use warnings;
 use App::RL;
 
 App::RL->run;
@@ -18,6 +20,7 @@ perl -I lib/ script/runlist merge t/I.yml t/II.yml -o stdout
 perl -I lib/ script/runlist stat t/intergenic.yml -s t/chr.sizes -o stdout
 
 perl -I lib/ script/runlist compare --op intersect t/intergenic.yml t/repeat.yml -o stdout
+perl -I lib/ script/runlist compare --op intersect --mk t/Atha.yml t/Atha.trf.yml -o stdout
 
 perl -I lib/ script/runlist split t/repeat.yml -o stdout
 
