@@ -15,6 +15,7 @@ sub opt_spec {
         [ "remove|r", "Remove 'chr0' from chromosome names." ],
         [ "mk",       "YAML file contains multiple sets of runlists." ],
         [ "all",      "Only write whole genome stats." ],
+        { show_defaults => 1, }
     );
 }
 
@@ -35,7 +36,10 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
     if ( @{$args} != 1 ) {
-        $self->usage_error("This command need one input file.");
+        my $message = "This command need one input file.\n\tIt found";
+        $message .= sprintf " [%s]", $_ for @{$args};
+        $message .= ".\n";
+        $self->usage_error($message);
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";
@@ -79,8 +83,7 @@ sub execute {
     else {
         @keys = ("__single");
         $s_of->{__single}
-            = App::RL::Common::runlist2set( YAML::Syck::LoadFile($infile),
-            $opt->{remove} );
+            = App::RL::Common::runlist2set( YAML::Syck::LoadFile($infile), $opt->{remove} );
     }
 
     #----------------------------#

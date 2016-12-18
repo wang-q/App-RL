@@ -8,6 +8,12 @@ use App::RL;
 my $result = test_app( 'App::RL' => [qw(help span)] );
 like( $result->stdout, qr{span}, 'descriptions' );
 
+$result = test_app( 'App::RL' => [qw(span)] );
+like( $result->error, qr{need .+input file}, 'need infile' );
+
+$result = test_app( 'App::RL' => [qw(span t/not_exists)] );
+like( $result->error, qr{doesn't exist}, 'infile not exists' );
+
 $result = test_app( 'App::RL' => [qw(span t/brca2.yml --op cover -o stdout)] );
 
 is( ( scalar grep {/\S/} split( /\n/, $result->stdout ) ), 2, 'line count' );

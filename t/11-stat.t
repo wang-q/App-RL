@@ -8,6 +8,15 @@ use App::RL;
 my $result = test_app( 'App::RL' => [qw(help stat -s t/chr.sizes)] );
 like( $result->stdout, qr{stat}, 'descriptions' );
 
+$result = test_app( 'App::RL' => [qw(stat)] );
+like( $result->error, qr{Mandatory parameter.+size}, 'need --size' );
+
+$result = test_app( 'App::RL' => [qw(stat -s t/chr.sizes)] );
+like( $result->error, qr{need .+input file}, 'need infile' );
+
+$result = test_app( 'App::RL' => [qw(stat -s t/chr.sizes t/not_exists)] );
+like( $result->error, qr{doesn't exist}, 'infile not exists' );
+
 $result = test_app(
     'App::RL' => [qw(stat t/intergenic.yml -s t/chr.sizes -o stdout)] );
 is( ( scalar grep {/\S/} split( /\n/, $result->stdout ) ), 18, 'line count' );

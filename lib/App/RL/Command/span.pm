@@ -11,24 +11,16 @@ use constant abstract => 'operate spans in a YAML file';
 sub opt_spec {
     return (
         [ "outfile|o=s", "Output filename. [stdout] for screen." ],
-        [   "op=s",
-            "operations: cover, holes, trim, pad, excise or fill. Default is [cover]",
-            { default => "cover" }
-        ],
-        [   "number|n=i",
-            "Apply this number to trim, pad, excise or fill. Default is [0]",
-            { default => 0 }
-        ],
-        [ "remove|r", "Remove 'chr0' from chromosome names." ],
-        [ "mk",       "YAML file contains multiple sets of runlists." ],
+        [ "op=s", "operations: cover, holes, trim, pad, excise or fill", { default => "cover" } ],
+        [ "number|n=i", "Apply this number to trim, pad, excise or fill", { default => 0 } ],
+        [ "remove|r",   "Remove 'chr0' from chromosome names." ],
+        [ "mk",         "YAML file contains multiple sets of runlists." ],
+        { show_defaults => 1, }
     );
 }
 
 sub usage_desc {
-    my $self = shift;
-    my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infile>";
-    return $desc;
+    return "runlist span [options] <infile>";
 }
 
 sub description {
@@ -36,10 +28,8 @@ sub description {
     $desc .= "List of operations.\n";
     $desc .= " " x 4 . "cover:  a single span from min to max;\n";
     $desc .= " " x 4 . "holes:  all the holes in runlist;\n";
-    $desc .= " " x 4
-        . "trim:   remove N integers from each end of each span of runlist;\n";
-    $desc .= " " x 4
-        . "pad:    add N integers from each end of each span of runlist;\n";
+    $desc .= " " x 4 . "trim:   remove N integers from each end of each span of runlist;\n";
+    $desc .= " " x 4 . "pad:    add N integers from each end of each span of runlist;\n";
     $desc .= " " x 4 . "excise: remove all spans smaller than N;\n";
     $desc .= " " x 4 . "fill:   fill in all holes smaller than N.\n";
     return $desc;
@@ -49,7 +39,10 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
     if ( @{$args} != 1 ) {
-        $self->usage_error("This command need one input file.");
+        my $message = "This command need one file.\n\tIt found";
+        $message .= sprintf " [%s]", $_ for @{$args};
+        $message .= ".\n";
+        $self->usage_error($message);
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";
@@ -113,8 +106,7 @@ sub execute {
     else {
         @keys = ("__single");
         $s_of->{__single}
-            = App::RL::Common::runlist2set( YAML::Syck::LoadFile($infile),
-            $opt->{remove} );
+            = App::RL::Common::runlist2set( YAML::Syck::LoadFile($infile), $opt->{remove} );
     }
 
     #----------------------------#

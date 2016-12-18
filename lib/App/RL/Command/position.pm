@@ -11,19 +11,14 @@ use constant abstract => 'compare runlists against positions';
 sub opt_spec {
     return (
         [ "outfile|o=s", "Output filename. [stdout] for screen." ],
-        [   "op=s",
-            "operations: overlap, non-overlap or superset. Default is [overlap]",
-            { default => "overlap" }
-        ],
+        [ "op=s",     "operations: overlap, non-overlap or superset", { default => "overlap" } ],
         [ "remove|r", "Remove 'chr0' from chromosome names." ],
+        { show_defaults => 1, }
     );
 }
 
 sub usage_desc {
-    my $self = shift;
-    my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <runlist file> <position files>";
-    return $desc;
+    return "runlist position [options] <runlist file> <position files>";
 }
 
 sub description {
@@ -40,7 +35,10 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
     if ( @{$args} < 2 ) {
-        $self->usage_error("This command need two or more input files.");
+        my $message = "This command need two or more input files.\n\tIt found";
+        $message .= sprintf " [%s]", $_ for @{$args};
+        $message .= ".\n";
+        $self->usage_error($message);
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";
@@ -63,8 +61,7 @@ sub validate_args {
     }
 
     if ( !exists $opt->{outfile} ) {
-        $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . "."
-            . $opt->{op} . ".yml";
+        $opt->{outfile} = Path::Tiny::path( $args->[0] )->absolute . "." . $opt->{op} . ".yml";
     }
 }
 
@@ -77,8 +74,7 @@ sub execute {
     my $chrs = Set::Scalar->new;
 
     my $set_single
-        = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ),
-        $opt->{remove} );
+        = App::RL::Common::runlist2set( YAML::Syck::LoadFile( $args->[0] ), $opt->{remove} );
     $chrs->insert( keys %{$set_single} );
 
     #----------------------------#
@@ -110,8 +106,7 @@ sub execute {
             if ( $chrs->has( $info->{chr} ) ) {
                 my $chr_single = $set_single->{ $info->{chr} };
                 if ( $chr_single->intersect($cur_positions)->is_not_empty ) {
-                    printf {$out_fh} "%s\n",
-                        App::RL::Common::encode_header($info);
+                    printf {$out_fh} "%s\n", App::RL::Common::encode_header($info);
                 }
             }
         }
@@ -120,8 +115,7 @@ sub execute {
             if ( $chrs->has( $info->{chr} ) ) {
                 my $chr_single = $set_single->{ $info->{chr} };
                 if ( $chr_single->intersect($cur_positions)->is_empty ) {
-                    printf {$out_fh} "%s\n",
-                        App::RL::Common::encode_header($info);
+                    printf {$out_fh} "%s\n", App::RL::Common::encode_header($info);
                 }
             }
             else {
@@ -133,8 +127,7 @@ sub execute {
             if ( $chrs->has( $info->{chr} ) ) {
                 my $chr_single = $set_single->{ $info->{chr} };
                 if ( $chr_single->superset($cur_positions) ) {
-                    printf {$out_fh} "%s\n",
-                        App::RL::Common::encode_header($info);
+                    printf {$out_fh} "%s\n", App::RL::Common::encode_header($info);
                 }
             }
         }

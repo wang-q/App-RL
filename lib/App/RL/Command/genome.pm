@@ -12,14 +12,12 @@ sub opt_spec {
     return (
         [ "outfile|o=s", "Output filename. [stdout] for screen." ],
         [ "remove|r",    "Remove 'chr0' from chromosome names." ],
+        { show_defaults => 1, }
     );
 }
 
 sub usage_desc {
-    my $self = shift;
-    my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infile>";
-    return $desc;
+    return "runlist genome [options] <infile>";
 }
 
 sub description {
@@ -32,7 +30,10 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
     if ( @{$args} != 1 ) {
-        $self->usage_error("This command need one input file.");
+        my $message = "This command need one input file.\n\tIt found";
+        $message .= sprintf " [%s]", $_ for @{$args};
+        $message .= ".\n";
+        $self->usage_error($message);
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";

@@ -9,21 +9,17 @@ use App::RL::Common;
 use constant abstract => 'output covers of positions on chromosomes';
 
 sub opt_spec {
-    return ( [ "outfile|o=s", "Output filename. [stdout] for screen." ], );
+    return ( [ "outfile|o=s", "Output filename. [stdout] for screen" ], { show_defaults => 1, } );
 }
 
 sub usage_desc {
-    my $self = shift;
-    my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infiles>";
-    return $desc;
+    return "runlist cover [options] <infiles>";
 }
 
 sub description {
     my $desc;
     $desc .= ucfirst(abstract) . ".\n";
-    $desc .= " " x 4
-        . "Like `runlist combine`, but <infiles> are genome positions.\n";
+    $desc .= " " x 4 . "Like `runlist combine`, but <infiles> are genome positions.\n";
     $desc .= " " x 4 . "I:1-100\n";
     $desc .= " " x 4 . "I(+):90-150\n";
     $desc .= " " x 4 . "S288c.I(-):190-200\tSpecies names will be omitted.\n";
@@ -34,7 +30,10 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
     if ( !@{$args} ) {
-        $self->usage_error("This command need one or more input files.");
+        my $message = "This command need one or more input files.\n\tIt found";
+        $message .= sprintf " [%s]", $_ for @{$args};
+        $message .= ".\n";
+        $self->usage_error($message);
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";
@@ -53,7 +52,7 @@ sub execute {
 
     my %count_of;    # YAML::Sync can't Dump tied hashes
     for my $infile ( @{$args} ) {
-        for my $line ( App::RL::Common::read_lines($infile ) ) {
+        for my $line ( App::RL::Common::read_lines($infile) ) {
             next if substr( $line, 0, 1 ) eq "#";
 
             my $info = App::RL::Common::decode_header($line);

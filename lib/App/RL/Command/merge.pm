@@ -9,14 +9,11 @@ use App::RL::Common;
 use constant abstract => 'merge runlist yaml files';
 
 sub opt_spec {
-    return ( [ "outfile|o=s", "Output filename. [stdout] for screen." ], );
+    return ( [ "outfile|o=s", "Output filename. [stdout] for screen." ], { show_defaults => 1, } );
 }
 
 sub usage_desc {
-    my $self = shift;
-    my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infiles>";
-    return $desc;
+    return "runlist merge [options] <infiles>";
 }
 
 sub description {
@@ -28,8 +25,11 @@ sub description {
 sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
-    if ( ! @{$args} ) {
-        $self->usage_error("This command need one or more input files.");
+    if ( !@{$args} ) {
+        my $message = "This command need one or more input files.\n\tIt found";
+        $message .= sprintf " [%s]", $_ for @{$args};
+        $message .= ".\n";
+        $self->usage_error($message);
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";

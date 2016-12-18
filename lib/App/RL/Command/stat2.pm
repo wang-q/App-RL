@@ -10,16 +10,14 @@ use constant abstract => 'coverage on another runlist for runlists';
 
 sub opt_spec {
     return (
-        [ "outfile|o=s", "Output filename. [stdout] for screen." ],
-        [   "op=s",
-            "Operations: intersect, union, diff or xor. Default is [intersect]",
-            { default => "intersect" }
-        ],
-        [ "size|s=s", "chr.sizes", { required => 1 } ],
+        [ "outfile|o=s", "Output filename. [stdout] for screen" ],
+        [ "op=s",     "Operations: intersect, union, diff or xor", { default  => "intersect" } ],
+        [ "size|s=s", "chr.sizes",                                 { required => 1 } ],
         [ "base|b=s", "basename of infile2", ],
-        [ "remove|r", "Remove 'chr0' from chromosome names." ],
-        [ "mk",       "First YAML file contains multiple sets of runlists." ],
-        [ "all",      "Only write whole genome stats" ],
+        [ "remove|r", "Remove 'chr0' from chromosome names" ],
+        [ "mk",  "First YAML file contains multiple sets of runlists" ],
+        [ "all", "Only write whole genome stats" ],
+        { show_defaults => 1, }
     );
 }
 
@@ -40,7 +38,10 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
     if ( @{$args} != 2 ) {
-        $self->usage_error("This command need two input file.");
+        my $message = "This command need two input files.\n\tIt found";
+        $message .= sprintf " [%s]", $_ for @{$args};
+        $message .= ".\n";
+        $self->usage_error($message);
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";
