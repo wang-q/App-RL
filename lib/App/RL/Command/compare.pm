@@ -10,21 +10,16 @@ use constant abstract => 'compare 2 chromosome runlists';
 
 sub opt_spec {
     return (
-        [ "outfile|o=s", "Output filename. [stdout] for screen." ],
-        [   "op=s",
-            "operations: intersect, union, diff or xor. Default is [intersect]",
-            { default => "intersect" }
-        ],
-        [ "remove|r", "Remove 'chr0' from chromosome names." ],
-        [ "mk",       "*Fisrt* YAML file contains multiple sets of runlists." ],
+        [ "outfile|o=s", "Output filename. [stdout] for screen" ],
+        [ "op=s",     "operations: intersect, union, diff or xor", { default => "intersect" } ],
+        [ "remove|r", "Remove 'chr0' from chromosome names" ],
+        [ "mk", "*Fisrt* YAML file contains multiple sets of runlists" ],
+        { show_defaults => 1, }
     );
 }
 
 sub usage_desc {
-    my $self = shift;
-    my $desc = $self->SUPER::usage_desc;    # "%c COMMAND %o"
-    $desc .= " <infile1> <infile2> [more infiles]";
-    return $desc;
+    return "runlist compare [options] <infile1> <infile2> [more infiles]";
 }
 
 sub description {
@@ -37,7 +32,10 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
 
     if ( @{$args} < 2 ) {
-        $self->usage_error("This command need two or more input files.");
+        my $message = "This command need two or more input files.\n\tIt found";
+        $message .= sprintf " [%s]", $_ for @{$args};
+        $message .= ".\n";
+        $self->usage_error($message);
     }
     for ( @{$args} ) {
         next if lc $_ eq "stdin";
@@ -139,7 +137,7 @@ sub execute {
     #----------------------------#
     my $out_fh;
     if ( lc( $opt->{outfile} ) eq "stdout" ) {
-        $out_fh = *STDOUT;
+        $out_fh = *STDOUT{IO};
     }
     else {
         open $out_fh, ">", $opt->{outfile};
