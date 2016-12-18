@@ -2,6 +2,10 @@ Revision history for App-RL
 
 {{$NEXT}}
 
+0.2.29 2016-12-18T15:30:27Z
+    - Switch to Minilla
+    - Improve test coverage
+
 0.2.28  2016-12-09 22:09:26 CST
     - Release to CPAN
 
