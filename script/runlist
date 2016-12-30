@@ -36,6 +36,8 @@ perl -I lib/ script/runlist some t/Atha.yml t/Atha.list -o stdout
 
 perl -I lib/ script/runlist cover t/S288c.txt -o stdout
 
+perl -I lib/ script/runlist coverage t/S288c.txt -s t/chr.sizes -m 1 -o stdout
+
 perl -I lib/ script/runlist span --op fill -n 1000 t/brca2.yml -o stdout
 
 perl -I lib/ script/runlist compare t/r1.yml t/r2.yml --op intersect -o stdout

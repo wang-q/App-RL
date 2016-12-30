@@ -2,7 +2,7 @@ requires 'App::Cmd', '0.330';
 requires 'AlignDB::IntSpan', '1.0.7';
 requires 'IO::Zlib';
 requires 'IPC::Cmd';
-requires 'List::MoreUtils', '0.413';
+requires 'List::Util';
 requires 'Path::Tiny', '0.076';
 requires 'Set::Scalar', '1.29';
 requires 'Tie::IxHash', '1.23';

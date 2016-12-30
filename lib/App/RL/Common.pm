@@ -5,13 +5,13 @@ use autodie;
 
 use 5.010001;
 
-use Carp;
+use Carp qw();
 use IO::Zlib;
-use List::MoreUtils;
+use List::Util;
 use Path::Tiny;
 use Set::Scalar;
 use Tie::IxHash;
-use YAML::Syck;
+use YAML::Syck qw();
 
 use AlignDB::IntSpan;
 
