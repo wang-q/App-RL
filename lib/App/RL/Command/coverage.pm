@@ -55,6 +55,8 @@ sub validate_args {
 sub execute {
     my ( $self, $opt, $args ) = @_;
 
+    my $length_of = App::RL::Common::read_sizes( $opt->{size} );
+
     my %count_of;    # YAML::Sync can't Dump tied hashes
     for my $depth ( 0 .. $opt->{max} ) {
         if ( !exists $count_of{$depth} ) {
@@ -62,7 +64,6 @@ sub execute {
         }
     }
     {
-        my $length_of = App::RL::Common::read_sizes( $opt->{size} );
         for my $chr ( keys %{$length_of} ) {
             $count_of{0}->{$chr} = App::RL::Common::new_set();
             $count_of{0}->{$chr}->add_pair( 1, $length_of->{$chr} );
@@ -77,9 +78,11 @@ sub execute {
             next unless App::RL::Common::info_is_valid($info);
 
             my $chr_name = $info->{chr};
+            next unless exists $length_of->{$chr_name};
 
             # count depth
             my $set = App::RL::Common::new_set()->add_pair( $info->{start}, $info->{end} );
+            $set = $count_of{0}->{$chr_name}->intersect($set);
         DEPTH: for my $cur ( 0 .. $opt->{max} ) {
                 if ( !exists $count_of{$cur}->{$chr_name} ) {
                     $count_of{$cur}->{$chr_name} = App::RL::Common::new_set();
