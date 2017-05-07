@@ -7,8 +7,8 @@ use 5.010001;
 
 use Carp qw();
 use IO::Zlib;
-use List::Util;
-use Path::Tiny;
+use List::Util qw();
+use Path::Tiny qw();
 use Set::Scalar;
 use Tie::IxHash;
 use YAML::Syck qw();
@@ -21,11 +21,34 @@ sub new_set {
     return AlignDB::IntSpan->new;
 }
 
+sub read_lines {
+    my $fn = shift;
+
+    my @lines;
+
+    if ( lc $fn eq "stdin" ) {
+        while (<STDIN>) {
+            chomp;
+            push @lines, $_;
+        }
+    }
+    else {
+        open my $fh, "<", $fn;
+        while (<$fh>) {
+            chomp;
+            push @lines, $_;
+        }
+        close $fh;
+    }
+
+    return @lines;
+}
+
 sub read_sizes {
-    my $file       = shift;
+    my $fn         = shift;
     my $remove_chr = shift;
 
-    my @lines = path($file)->lines( { chomp => 1 } );
+    my @lines = read_lines($fn);
     my %length_of;
     for (@lines) {
         my ( $key, $value ) = split /\t/;
@@ -37,27 +60,11 @@ sub read_sizes {
 }
 
 sub read_names {
-    my $file = shift;
+    my $fn = shift;
 
-    my @lines = path($file)->lines( { chomp => 1 } );
+    my @lines = read_lines($fn);
 
     return \@lines;
-}
-
-sub read_lines {
-    my $filename = shift;
-
-    if ( lc $filename eq "stdin" ) {
-        my @lines;
-        while (<STDIN>) {
-            chomp;
-            push @lines, $_;
-        }
-        return @lines;
-    }
-    else {
-        return Path::Tiny::path($filename)->lines( { chomp => 1 } );
-    }
 }
 
 sub runlist2set {
@@ -188,8 +195,7 @@ sub encode_header {
 
     # additional keys
     if ( !$only_essential ) {
-        my %essential
-            = map { $_ => 1 } qw{name chr strand start end seq full_seq};
+        my %essential = map { $_ => 1 } qw{name chr strand start end seq full_seq};
         my @parts;
         for my $key ( sort keys %{$info} ) {
             if ( !$essential{$key} ) {
