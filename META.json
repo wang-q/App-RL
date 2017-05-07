@@ -4,7 +4,7 @@
       "Qiang Wang <wang-q@outlook.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.0.7, CPAN::Meta::Converter version 2.150005",
+   "generated_by" : "Minilla/v3.0.10, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
@@ -72,7 +72,7 @@
          "web" : "https://github.com/wang-q/App-RL"
       }
    },
-   "version" : "0.2.31",
+   "version" : "0.2.32",
    "x_contributors" : [
       "Qiang Wang <wang-q@users.noreply.github.com>"
    ],
