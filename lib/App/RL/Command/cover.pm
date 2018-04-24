@@ -24,7 +24,7 @@ sub description {
     $desc .= ucfirst(abstract) . ".\n";
     $desc .= <<'MARKDOWN';
 
-Like `runlist combine`, but <infiles> are genome positions
+Like `runlist combine`, but <infile> are genome positions
 
     I:1-100
     I(+):90-150

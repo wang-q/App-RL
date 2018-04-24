@@ -20,7 +20,7 @@ sub opt_spec {
 }
 
 sub usage_desc {
-    return "runlist coverage [options] <infiles>";
+    return "runlist coverage [options] <infile> [more infiles]";
 }
 
 sub description {
