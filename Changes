@@ -1,6 +1,10 @@
 Revision history for App-RL
 
 {{$NEXT}}
+    - Add `runlist gff`
+    - Better description() for all commands
+    - Update minil.toml and README
+    - Support reading from gzipped files
 
 0.2.33 2017-06-01T02:51:05Z
     - Add command convert
