@@ -1,6 +1,6 @@
 package App::RL;
 
-our $VERSION = '0.2.33';
+our $VERSION = '0.3.0';
 
 use strict;
 use warnings;
