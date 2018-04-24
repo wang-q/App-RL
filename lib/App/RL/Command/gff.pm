@@ -13,7 +13,7 @@ sub abstract {
 sub opt_spec {
     return (
         [ "outfile|o=s", "output filename. [stdout] for screen" ],
-        [ "tag|t",       "primary tag (the third field)" ],
+        [ "tag|t=s",     "primary tag (the third field)" ],
         [ "remove|r",    "remove 'chr0' from chromosome names" ],
         { show_defaults => 1, }
     );
@@ -89,6 +89,11 @@ sub execute {
             }
             $set_of->{$chr_name}->add_pair( $chr_start, $chr_end );
         }
+    }
+
+    # IntSpan to runlist
+    for my $chr_name ( keys %{$set_of} ) {
+        $set_of->{$chr_name} = $set_of->{$chr_name}->runlist;
     }
 
     #----------------------------#
