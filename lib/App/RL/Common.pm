@@ -87,7 +87,7 @@ sub decode_header {
 
     tie my %info, "Tie::IxHash";
 
-    # S288.chrI(+):27070-29557|species=S288C
+    # S288c.chrI(+):27070-29557|species=S288C
     my $head_qr = qr{
         (?:(?P<name>[\w_]+)\.)?
         (?P<chr>[\w-]+)
